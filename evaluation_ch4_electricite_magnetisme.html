@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Évaluation – Chapitre 4 – L'électricité et le magnétisme</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0ece4;font-family:'Source Sans 3',sans-serif;font-size:15px;color:#1a1a1a;padding:28px 16px 60px}
+.page{background:#fff;max-width:820px;margin:0 auto;padding:44px 52px 56px;box-shadow:0 2px 20px rgba(0,0,0,.12)}
+@media(max-width:620px){.page{padding:22px 16px 36px}}
+
+.exam-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:2.5px solid #1a1a1a;margin-bottom:22px}
+.header-left h1{font-family:'Source Serif 4',serif;font-weight:700;font-size:19px;line-height:1.25}
+.header-left p{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#666;margin-top:3px}
+.eval-pill{background:#1a1a1a;color:#fff;font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:3px 12px;display:inline-block}
+.total-box{font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;border:2px solid #1a1a1a;padding:3px 16px;margin-top:7px;display:inline-block}
+
+.student-info{display:flex;gap:28px;margin-bottom:20px;padding-bottom:13px;border-bottom:1px solid #ccc;flex-wrap:wrap}
+.info-field{flex:1;min-width:110px}
+.info-field label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#888;display:block;margin-bottom:3px}
+.info-field input{width:100%;border:none;border-bottom:1.5px solid #bbb;padding:4px 2px;font-size:14px;font-family:'Source Sans 3',sans-serif;background:transparent;outline:none}
+.info-field input:focus{border-bottom-color:#1a1a1a}
+
+.prog-wrap{margin-bottom:24px}
+.prog-top{display:flex;justify-content:space-between;font-size:11px;color:#888;font-weight:600;margin-bottom:5px}
+.prog-bar{height:4px;background:#e8e4dc;border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:#1a1a1a;border-radius:2px;width:0%;transition:width .4s}
+
+.section-heading{font-family:'Source Serif 4',serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;border-bottom:2px solid #1a1a1a;padding-bottom:5px;margin:32px 0 18px}
+
+.question{margin-bottom:26px}
+.q-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.q-num{flex-shrink:0;width:25px;height:25px;border-radius:50%;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;font-family:'Source Serif 4',serif}
+.q-text{flex:1;font-size:14.5px;line-height:1.55}
+.q-pts{flex-shrink:0;font-size:11.5px;font-weight:700;border:1.5px solid #bbb;padding:1px 8px;color:#555}
+
+.choices{padding-left:35px;display:flex;flex-direction:column;gap:6px;margin-top:5px}
+.ch{display:flex;align-items:flex-start;gap:8px;padding:6px 9px;border-radius:3px;border:1px solid transparent;cursor:pointer;font-size:13.5px;line-height:1.5;user-select:none;transition:background .1s,border-color .1s}
+.ch:hover{background:#f5f2ec;border-color:#ccc}
+.ch input[type=radio]{appearance:none;width:15px;height:15px;border-radius:50%;border:1.5px solid #999;flex-shrink:0;margin-top:2px;cursor:pointer;transition:all .1s}
+.ch input:checked{background:#1a1a1a;border-color:#1a1a1a;box-shadow:inset 0 0 0 3px #fff}
+.cl{font-weight:700;font-size:12px;color:#666;flex-shrink:0;min-width:14px;margin-top:1px}
+.show-ans .ch.is-ok{background:#e8f5e9;border-color:#4caf50}
+.show-ans .ch.is-bad{background:#ffebee;border-color:#ef5350}
+
+.tf-wrap{padding-left:35px;margin-top:8px}
+.tf-tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tf-tbl th{text-align:center;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#666;border-bottom:1.5px solid #1a1a1a;padding:4px 10px}
+.tf-tbl th:first-child{text-align:left}
+.tf-tbl td{padding:8px 10px;border-bottom:1px solid #e8e4dc;vertical-align:middle}
+.tf-tbl td:not(:first-child){text-align:center}
+.tf-tbl tr:last-child td{border-bottom:none}
+.tfd{appearance:none;width:17px;height:17px;border-radius:50%;border:1.5px solid #999;cursor:pointer;transition:all .1s}
+.tfd:checked{background:#1a1a1a;border-color:#1a1a1a;box-shadow:inset 0 0 0 3px #fff}
+
+.sel-wrap{padding-left:35px;margin-top:8px}
+.sq{margin-bottom:10px}
+.sql{font-size:13.5px;margin-bottom:4px;line-height:1.5}
+.sql b{font-weight:700}
+select.asel{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;border:1.5px solid #bbb;border-radius:3px;padding:7px 30px 7px 10px;font-family:'Source Sans 3',sans-serif;font-size:13px;color:#1a1a1a;cursor:pointer;transition:border-color .1s;min-width:180px}
+select.asel:focus{outline:none;border-color:#1a1a1a}
+
+/* Tableau de données */
+.dt{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 6px}
+.dt th{background:#f5f2ec;border:1px solid #ccc;padding:7px 10px;font-weight:700;font-size:11.5px;text-align:center}
+.dt td{border:1px solid #ddd;padding:7px 10px;text-align:center;vertical-align:middle}
+.dt td.lt{text-align:left;font-weight:600;background:#fafafa}
+
+/* Liste électrostatique */
+.elstat-box{background:#f8f6f2;border:1px solid #e0ddd8;border-radius:4px;padding:12px 16px;margin:10px 0;font-size:13px}
+.elstat-box .title{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#555;margin-bottom:6px}
+.elstat-list{list-style:none;padding:0}
+.elstat-list li{padding:2px 0;font-size:13px;color:#444;border-bottom:1px solid #ede9e0}
+.elstat-list li:last-child{border-bottom:none}
+.elstat-list li.give{color:#c0392b;font-weight:600}
+.elstat-list li.receive{color:#2980b9;font-weight:600}
+.elstat-list li.separator{background:#1a1a1a;color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px;margin:4px 0;border-radius:2px;border:none}
+
+/* Circuit SVG */
+.circuit-wrap{margin:12px 0 8px 35px;background:#f8f6f2;border:1px solid #e0ddd8;border-radius:4px;padding:14px;display:flex;justify-content:center;overflow-x:auto}
+
+/* Calc */
+.calc-wrap{padding-left:35px;margin-top:8px}
+.calc-step{background:#f8f6f2;border:1px solid #e0ddd8;border-radius:4px;padding:12px 14px;margin-bottom:10px}
+.calc-step-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:8px}
+.calc-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13.5px;margin-bottom:6px}
+.calc-row:last-child{margin-bottom:0}
+.calc-input{border:1.5px solid #bbb;border-radius:3px;padding:5px 8px;font-family:'Source Serif 4',serif;font-size:14px;font-weight:600;text-align:center;width:90px;transition:border-color .1s,background .1s}
+.calc-input:focus{outline:none;border-color:#1a1a1a}
+.calc-input.cok{border-color:#4caf50;background:#f1faf2;color:#2e7d32}
+.calc-input.cko{border-color:#ef5350;background:#fff0f0;color:#c62828}
+.calc-unit{font-size:12px;color:#666;font-weight:600}
+.formula-box{background:#fff;border:1.5px solid #1a1a1a;border-radius:3px;padding:6px 12px;font-family:'Source Serif 4',serif;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+
+.corr{display:none;margin-top:9px;margin-left:35px;padding:9px 12px;background:#e8f5e9;border-left:3px solid #4caf50;border-radius:0 3px 3px 0;font-size:12.5px;color:#2e7d32;line-height:1.6}
+.show-ans .corr{display:block}
+
+.ac-fb{margin-top:8px;padding:7px 9px;border-radius:3px;font-size:12px;font-weight:600;line-height:1.5;display:none}
+.ac-fb.fbok{background:#e8f5e9;border-left:3px solid #4caf50;color:#2e7d32;display:block}
+.ac-fb.fbko{background:#ffebee;border-left:3px solid #ef5350;color:#c62828;display:block}
+
+/* Fiche interactive */
+.fiche-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+@media(max-width:540px){.fiche-grid{grid-template-columns:1fr}}
+.fiche-card{border:1.5px solid #ddd;border-radius:4px;overflow:hidden;transition:border-color .2s,background .2s}
+.fiche-card.fc-ok{border-color:#4caf50;background:#f1faf2}
+.fiche-card.fc-ko{border-color:#ef5350;background:#fff8f8}
+.fc-head{background:#f5f2ec;border-bottom:1px solid #e0ddd8;padding:8px 13px;display:flex;justify-content:space-between;align-items:center}
+.fc-title{font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:#555}
+.fc-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:10px}
+.fc-badge.pend{background:#ede9e0;color:#888}
+.fc-badge.ok{background:#e8f5e9;color:#2e7d32}
+.fc-badge.ko{background:#ffebee;color:#c62828}
+.fc-body{padding:12px}
+.fc-display{background:#fafaf8;border:1.5px solid #ddd;border-radius:3px;padding:10px 12px;margin-bottom:10px;transition:border-color .2s,background .2s}
+.fc-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:3px 0;border-bottom:1px solid #eee}
+.fc-row:last-child{border-bottom:none}
+.fc-key{color:#777;font-weight:600;font-size:11.5px}
+.fc-val{font-weight:700;color:#1a1a1a;font-family:'Source Serif 4',serif;font-size:13.5px}
+.fc-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#888;margin-bottom:4px;margin-top:8px;display:block}
+.fc-lbl:first-child{margin-top:0}
+select.asel15{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 9px center;border:1.5px solid #bbb;border-radius:3px;padding:6px 28px 6px 9px;font-family:'Source Sans 3',sans-serif;font-size:12.5px;color:#1a1a1a;cursor:pointer;width:100%;margin-bottom:3px;transition:border-color .15s,background .15s}
+select.asel15:focus{outline:none;border-color:#1a1a1a}
+.btn-ver{margin-top:9px;width:100%;background:#1a1a1a;color:#fff;border:none;padding:7px 0;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:12.5px;cursor:pointer;border-radius:3px;transition:background .1s}
+.btn-ver:hover{background:#333}
+.btn-eff{margin-top:4px;width:100%;background:#fff;color:#777;border:1.5px solid #ccc;padding:5px 0;font-family:'Source Sans 3',sans-serif;font-weight:600;font-size:11.5px;cursor:pointer;border-radius:3px;transition:all .1s}
+.btn-eff:hover{border-color:#1a1a1a;color:#1a1a1a}
+
+/* Submit */
+.submit-zone{margin-top:38px;padding:26px 30px;background:#f8f6f2;border:1.5px solid #ddd;border-radius:4px;text-align:center}
+.btn-go{background:#1a1a1a;color:#fff;border:none;padding:13px 42px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:15px;letter-spacing:.03em;cursor:pointer;border-radius:3px;transition:background .15s}
+.btn-go:hover{background:#333}
+#results{display:none;margin-top:22px;padding:22px;background:#fff;border:1.5px solid #ccc;border-radius:4px}
+.rs{font-family:'Source Serif 4',serif;font-size:46px;font-weight:700;line-height:1;margin-bottom:3px}
+.rl{font-size:13px;color:#777;margin-bottom:14px}
+.rbd{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+.rbi{border:1.5px solid #ddd;border-radius:3px;padding:8px 16px;text-align:center;min-width:86px}
+.rv{font-size:20px;font-weight:700;display:block}
+.rv.g{color:#2e7d32}.rv.r{color:#c62828}.rv.y{color:#e65100}
+.rl2{font-size:10px;color:#888;font-weight:600;text-transform:uppercase}
+.rfb{font-size:15px;font-weight:700;margin:14px 0 3px;color:#1a1a1a}
+.rnote{font-size:12px;color:#888;margin-top:10px;line-height:1.6}
+.btn-rst{margin-top:14px;background:#fff;border:1.5px solid #1a1a1a;padding:9px 26px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:13px;cursor:pointer;border-radius:3px;transition:background .1s}
+.btn-rst:hover{background:#f0ece4}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- EN-TÊTE -->
+<div class="exam-header">
+  <div class="header-left">
+    <h1>Chapitre 4<br>L'électricité et le magnétisme</h1>
+    <p>Sciences et technologie · Évaluation ST</p>
+  </div>
+  <div style="text-align:right">
+    <div class="eval-pill">Évaluation ST</div>
+    <div class="total-box">/ 70</div>
+  </div>
+</div>
+
+<div class="student-info">
+  <div class="info-field"><label>Nom</label><input type="text" placeholder="Ton nom…"></div>
+  <div class="info-field"><label>Date</label><input type="text" placeholder="Date…"></div>
+  <div class="info-field"><label>Groupe</label><input type="text" placeholder="Groupe…"></div>
+</div>
+
+<div class="prog-wrap">
+  <div class="prog-top"><span id="prog-lbl">0 réponse</span><span id="prog-pct">0 %</span></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+</div>
+
+
+<!-- ════════════════════════════
+     SECTION 1 — CHOIX MULTIPLES
+════════════════════════════ -->
+<div class="section-heading">Questions à choix multiples</div>
+
+<!-- Q1 : Charges électrostatiques attraction/répulsion -->
+<div class="question" id="qcard-1">
+  <div class="q-row"><div class="q-num">1</div>
+    <div class="q-text">
+      On frotte une tige de verre avec de la soie (tige de verre → charge +). On frotte ensuite une tige d'ébonite avec du coton (tige d'ébonite → charge −). Les deux tiges <strong>s'attirent</strong>.<br><br>
+      On frotte maintenant une tige de PVC avec du nylon (tige de PVC → charge −). On approche la tige de PVC de la tige de verre chargée positivement.<br><br>
+      Lequel de ces énoncés explique correctement le comportement observé ?
+    </div>
+    <div class="q-pts">/ 2</div>
+  </div>
+  <div class="choices">
+    <label class="ch"><input type="radio" name="q1" value="A"><span class="cl">A</span>La tige de verre est repoussée par la tige de PVC, car elles portent des charges de signes contraires.</label>
+    <label class="ch"><input type="radio" name="q1" value="B"><span class="cl">B</span>La tige de verre est repoussée par la tige de PVC, car elles portent des charges de même signe.</label>
+    <label class="ch"><input type="radio" name="q1" value="C"><span class="cl">C</span>La tige de verre est attirée par la tige de PVC, car elles portent des charges de signes contraires.</label>
+    <label class="ch"><input type="radio" name="q1" value="D"><span class="cl">D</span>La tige de verre est attirée par la tige de PVC, car elles portent des charges de même signe.</label>
+  </div>
+  <div class="corr">✓ Bonne réponse : <strong>C</strong> — Tige de verre : charge + ; tige de PVC : charge −. Des charges de signes contraires s'attirent. Les deux tiges s'attirent.</div>
+</div>
+
+<!-- Q2 : Induction électrostatique -->
+<div class="question" id="qcard-2">
+  <div class="q-row"><div class="q-num">2</div>
+    <div class="q-text">On approche une tige de verre chargée positivement d'un objet neutre. Quel énoncé décrit correctement le comportement des charges dans l'objet neutre ?</div>
+    <div class="q-pts">/ 2</div>
+  </div>
+  <div class="choices">
+    <label class="ch"><input type="radio" name="q2" value="A"><span class="cl">A</span>Il n'y a aucun déplacement des charges, puisque l'objet est neutre.</label>
+    <label class="ch"><input type="radio" name="q2" value="B"><span class="cl">B</span>Les charges positives à la surface de l'objet neutre sont repoussées par les charges positives de la tige.</label>
+    <label class="ch"><input type="radio" name="q2" value="C"><span class="cl">C</span>Les charges négatives à la surface de l'objet neutre sont repoussées par les charges positives de la tige.</label>
+    <label class="ch"><input type="radio" name="q2" value="D"><span class="cl">D</span>Les charges négatives à la surface de l'objet neutre sont attirées par les charges positives de la tige.</label>
+  </div>
+  <div class="corr">✓ Bonne réponse : <strong>D</strong> — C'est le principe de l'électrisation par induction. La tige chargée + attire les charges − de l'objet neutre vers elle, sans contact direct. L'objet reste neutre globalement mais se polarise.</div>
+</div>
+
+<!-- Q3 : Rallonge électrique et résistance -->
+<div class="question" id="qcard-3">
+  <div class="q-row"><div class="q-num">3</div>
+    <div class="q-text">Marco utilise une scie électrique dans son atelier. L'atelier se trouve à <strong>20 m</strong> de la prise de courant et la pièce de bois à couper est à <strong>5 m</strong> de plus. Quelle rallonge devrait-il utiliser pour optimiser l'efficacité de sa scie ?</div>
+    <div class="q-pts">/ 2</div>
+  </div>
+  <div class="choices">
+    <label class="ch"><input type="radio" name="q3" value="A"><span class="cl">A</span>Une rallonge de 30 m avec un petit diamètre.</label>
+    <label class="ch"><input type="radio" name="q3" value="B"><span class="cl">B</span>Une rallonge de 30 m avec un grand diamètre.</label>
+    <label class="ch"><input type="radio" name="q3" value="C"><span class="cl">C</span>Une rallonge de 25 m avec un petit diamètre.</label>
+    <label class="ch"><input type="radio" name="q3" value="D"><span class="cl">D</span>Une rallonge de 25 m avec un grand diamètre.</label>
+  </div>
+  <div class="corr">✓ Bonne réponse : <strong>D</strong> — Distance = 20 + 5 = 25 m → rallonge de 25 m (pas plus longue pour éviter résistance inutile). Grand diamètre = moins de résistance = moins de perte d'énergie = meilleure efficacité.</div>
+</div>
+
+<!-- Q4 : Loi d'Ohm et tension double -->
+<div class="question" id="qcard-4">
+  <div class="q-row"><div class="q-num">4</div>
+    <div class="q-text">Une ampoule de 5 W est alimentée par une pile de 1,5 V. On ajoute une seconde pile de 1,5 V identique en série dans le circuit. Lequel de ces énoncés décrit correctement cette nouvelle situation ?</div>
+    <div class="q-pts">/ 2</div>
+  </div>
+  <div class="choices">
+    <label class="ch"><input type="radio" name="q4" value="A"><span class="cl">A</span>La résistance de l'ampoule doublera.</label>
+    <label class="ch"><input type="radio" name="q4" value="B"><span class="cl">B</span>La résistance de l'ampoule diminuera de moitié.</label>
+    <label class="ch"><input type="radio" name="q4" value="C"><span class="cl">C</span>L'intensité du courant doublera.</label>
+    <label class="ch"><input type="radio" name="q4" value="D"><span class="cl">D</span>L'intensité du courant diminuera de moitié.</label>
+  </div>
+  <div class="corr">✓ Bonne réponse : <strong>C</strong> — La résistance de l'ampoule ne change pas (propriété du composant). En ajoutant une pile en série, la tension double (1,5 V → 3 V). Selon I = U/R, si U double et R reste constant, I double aussi.</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SECTION 2 — RÉPONSES COURTES
+════════════════════════════ -->
+<div class="section-heading">Questions à réponses courtes</div>
+
+<!-- Q5 : Liste électrostatique et charges -->
+<div class="question" id="qcard-5">
+  <div class="q-row"><div class="q-num">5</div>
+    <div class="q-text">À l'aide de la liste électrostatique ci-dessous, indique la <strong>charge acquise</strong> par chaque matériau dans les situations suivantes.</div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <!-- Liste électrostatique -->
+  <div style="padding-left:35px;margin-bottom:14px">
+    <div class="elstat-box">
+      <div class="title">Liste électrostatique</div>
+      <ul class="elstat-list">
+        <li class="give">▲ Tendance à donner des électrons (charge +)</li>
+        <li>Acétate · Verre · Cheveux · Laine · Soie</li>
+        <li>Papier · Coton · Polyéthylène · Bois · Caoutchouc</li>
+        <li>Nickel, cuivre · Or</li>
+        <li class="receive">▼ Tendance à recevoir des électrons (charge −)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sel-wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div class="sql"><b>a)</b> On frotte un ballon de latex contre un chandail de laine.</div>
+        <div class="sq"><div class="sql">Le latex (caoutchouc) :</div>
+          <select class="asel" name="q5a1"><option value="">— Charge —</option><option value="pos">Charge positive (+)</option><option value="neg">Charge négative (−)</option><option value="neu">Neutre</option></select></div>
+        <div class="sq"><div class="sql">La laine :</div>
+          <select class="asel" name="q5a2"><option value="">— Charge —</option><option value="pos">Charge positive (+)</option><option value="neg">Charge négative (−)</option><option value="neu">Neutre</option></select></div>
+      </div>
+      <div>
+        <div class="sql"><b>b)</b> On utilise un peigne en polyéthylène pour se coiffer les cheveux.</div>
+        <div class="sq"><div class="sql">Le polyéthylène :</div>
+          <select class="asel" name="q5b1"><option value="">— Charge —</option><option value="pos">Charge positive (+)</option><option value="neg">Charge négative (−)</option><option value="neu">Neutre</option></select></div>
+        <div class="sq"><div class="sql">Les cheveux :</div>
+          <select class="asel" name="q5b2"><option value="">— Charge —</option><option value="pos">Charge positive (+)</option><option value="neg">Charge négative (−)</option><option value="neu">Neutre</option></select></div>
+      </div>
+    </div>
+  </div>
+  <div class="corr">✓ Réponses :<br>
+  <strong>a)</strong> La laine est au-dessus du caoutchouc dans la liste → la laine donne des électrons au caoutchouc. <strong>Latex (caoutchouc) : charge −</strong> · <strong>Laine : charge +</strong><br>
+  <strong>b)</strong> Les cheveux sont au-dessus du polyéthylène → les cheveux donnent des électrons au polyéthylène. <strong>Polyéthylène : charge −</strong> · <strong>Cheveux : charge +</strong></div>
+</div>
+
+<!-- Q6 : Ampèremètre et voltmètre dans un circuit -->
+<div class="question" id="qcard-6">
+  <div class="q-row"><div class="q-num">6</div>
+    <div class="q-text">Dans un circuit électrique, un <strong>ampèremètre</strong> mesure l'intensité du courant et un <strong>voltmètre</strong> mesure la tension. Pour chaque affirmation suivante, indique si elle concerne l'ampèremètre (A) ou le voltmètre (V).</div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="sel-wrap">
+    <div class="sq"><div class="sql"><b>a)</b> Il est branché en <strong>série</strong> dans le circuit.</div>
+      <select class="asel" name="q6a"><option value="">— Choisir —</option><option value="A">Ampèremètre (A)</option><option value="V">Voltmètre (V)</option></select></div>
+    <div class="sq"><div class="sql"><b>b)</b> Il est branché en <strong>parallèle</strong> aux bornes du composant mesuré.</div>
+      <select class="asel" name="q6b"><option value="">— Choisir —</option><option value="A">Ampèremètre (A)</option><option value="V">Voltmètre (V)</option></select></div>
+    <div class="sq"><div class="sql"><b>c)</b> Il mesure les ampères (A).</div>
+      <select class="asel" name="q6c"><option value="">— Choisir —</option><option value="A">Ampèremètre (A)</option><option value="V">Voltmètre (V)</option></select></div>
+    <div class="sq"><div class="sql"><b>d)</b> Il mesure les volts (V).</div>
+      <select class="asel" name="q6d"><option value="">— Choisir —</option><option value="A">Ampèremètre (A)</option><option value="V">Voltmètre (V)</option></select></div>
+  </div>
+  <div class="corr">✓ <strong>a) Ampèremètre</strong> (en série) · <strong>b) Voltmètre</strong> (en parallèle) · <strong>c) Ampèremètre</strong> (mesure les A) · <strong>d) Voltmètre</strong> (mesure les V)</div>
+</div>
+
+<!-- Q7 : Circuits série et parallèle -->
+<div class="question" id="qcard-7">
+  <div class="q-row"><div class="q-num">7</div>
+    <div class="q-text">Identifie si les ampoules des circuits suivants sont branchées <strong>en série</strong> ou <strong>en parallèle</strong>, et explique comment tu le sais.</div>
+    <div class="q-pts">/ 2</div>
+  </div>
+  <!-- SVG circuits -->
+  <div style="padding-left:35px;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0">
+    <!-- Circuit a : parallèle -->
+    <div style="background:#f8f6f2;border:1px solid #e0ddd8;border-radius:4px;padding:12px;text-align:center">
+      <svg viewBox="0 0 160 120" width="150" height="112" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pile -->
+        <rect x="10" y="50" width="8" height="20" fill="#1a1a1a" rx="1"/>
+        <rect x="14" y="45" width="4" height="30" fill="#555" rx="1"/>
+        <text x="8" y="44" font-size="8" font-family="sans-serif" fill="#1a1a1a">+</text>
+        <text x="8" y="78" font-size="8" font-family="sans-serif" fill="#1a1a1a">−</text>
+        <!-- Fils horizontaux haut et bas -->
+        <line x1="18" y1="50" x2="145" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="18" y1="70" x2="145" y2="70" stroke="#1a1a1a" stroke-width="1.5"/>
+        <!-- Ampoule 1 -->
+        <line x1="60" y1="50" x2="60" y2="38" stroke="#1a1a1a" stroke-width="1.5"/>
+        <circle cx="60" cy="34" r="6" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="57" y1="31" x2="63" y2="37" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="63" y1="31" x2="57" y2="37" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="60" y1="28" x2="60" y2="70" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2,28"/>
+        <text x="55" y="22" font-size="9" font-family="sans-serif" fill="#555">1</text>
+        <!-- Ampoule 2 -->
+        <line x1="110" y1="50" x2="110" y2="38" stroke="#1a1a1a" stroke-width="1.5"/>
+        <circle cx="110" cy="34" r="6" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="107" y1="31" x2="113" y2="37" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="113" y1="31" x2="107" y2="37" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="110" y1="28" x2="110" y2="70" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2,28"/>
+        <text x="105" y="22" font-size="9" font-family="sans-serif" fill="#555">2</text>
+        <!-- Connexions verticales -->
+        <line x1="60" y1="50" x2="60" y2="70" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="110" y1="50" x2="110" y2="70" stroke="#1a1a1a" stroke-width="1.5"/>
+      </svg>
+      <div style="font-size:12px;font-weight:700;color:#555;margin-top:4px">Circuit a)</div>
+    </div>
+    <!-- Circuit b : série -->
+    <div style="background:#f8f6f2;border:1px solid #e0ddd8;border-radius:4px;padding:12px;text-align:center">
+      <svg viewBox="0 0 180 100" width="160" height="90" xmlns="http://www.w3.org/2000/svg">
+        <!-- Pile -->
+        <rect x="5" y="38" width="8" height="24" fill="#1a1a1a" rx="1"/>
+        <rect x="9" y="33" width="4" height="34" fill="#555" rx="1"/>
+        <text x="3" y="32" font-size="8" font-family="sans-serif" fill="#1a1a1a">+</text>
+        <text x="3" y="72" font-size="8" font-family="sans-serif" fill="#1a1a1a">−</text>
+        <!-- Ligne haut -->
+        <line x1="13" y1="38" x2="170" y2="38" stroke="#1a1a1a" stroke-width="1.5"/>
+        <!-- Ligne bas -->
+        <line x1="13" y1="62" x2="170" y2="62" stroke="#1a1a1a" stroke-width="1.5"/>
+        <!-- Côté droit -->
+        <line x1="170" y1="38" x2="170" y2="62" stroke="#1a1a1a" stroke-width="1.5"/>
+        <!-- Ampoule 1 -->
+        <circle cx="75" cy="50" r="8" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="71" y1="46" x2="79" y2="54" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="79" y1="46" x2="71" y2="54" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="55" y1="50" x2="67" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="83" y1="50" x2="120" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="70" y="35" font-size="9" font-family="sans-serif" fill="#555">1</text>
+        <!-- Ampoule 2 -->
+        <circle cx="135" cy="50" r="8" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="131" y1="46" x2="139" y2="54" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="139" y1="46" x2="131" y2="54" stroke="#1a1a1a" stroke-width="1"/>
+        <line x1="120" y1="50" x2="127" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="143" y1="50" x2="170" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+        <text x="130" y="35" font-size="9" font-family="sans-serif" fill="#555">2</text>
+        <!-- Connexions pile -->
+        <line x1="13" y1="38" x2="55" y2="38" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="55" y1="38" x2="55" y2="50" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="13" y1="62" x2="170" y2="62" stroke="#1a1a1a" stroke-width="1.5"/>
+      </svg>
+      <div style="font-size:12px;font-weight:700;color:#555;margin-top:4px">Circuit b)</div>
+    </div>
+  </div>
+  <div class="sel-wrap">
+    <div class="sq"><div class="sql"><b>a)</b> Les ampoules 1 et 2 dans le circuit a) sont branchées :</div>
+      <select class="asel" name="q7a"><option value="">— Choisir —</option><option value="parallele">En parallèle</option><option value="serie">En série</option></select></div>
+    <div class="sq"><div class="sql"><b>b)</b> Les ampoules 1 et 2 dans le circuit b) sont branchées :</div>
+      <select class="asel" name="q7b"><option value="">— Choisir —</option><option value="parallele">En parallèle</option><option value="serie">En série</option></select></div>
+  </div>
+  <div class="corr">✓ <strong>a) En parallèle</strong> — chaque ampoule est sur une branche distincte et reliée directement aux deux mêmes fils. · <strong>b) En série</strong> — les ampoules sont sur le même fil l'une après l'autre ; le courant les traverse l'une après l'autre.</div>
+</div>
+
+<!-- Q8 : Type d'électrisation -->
+<div class="question" id="qcard-8">
+  <div class="q-row"><div class="q-num">8</div>
+    <div class="q-text">Identifie le <strong>type d'électrisation</strong> dans chacune des situations suivantes.</div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="sel-wrap">
+    <div class="sq"><div class="sql"><b>a)</b> On frotte un ballon de caoutchouc contre un chandail de laine. Le ballon devient chargé négativement.</div>
+      <select class="asel" name="q8a"><option value="">— Choisir —</option><option value="frottement">Électrisation par frottement</option><option value="conduction">Électrisation par conduction</option><option value="induction">Électrisation par induction</option></select></div>
+    <div class="sq"><div class="sql"><b>b)</b> On touche une sphère métallique neutre avec une tige chargée positivement. La sphère devient chargée positivement.</div>
+      <select class="asel" name="q8b"><option value="">— Choisir —</option><option value="frottement">Électrisation par frottement</option><option value="conduction">Électrisation par conduction</option><option value="induction">Électrisation par induction</option></select></div>
+    <div class="sq"><div class="sql"><b>c)</b> On approche une tige chargée négativement d'une sphère neutre sans la toucher. La sphère se polarise.</div>
+      <select class="asel" name="q8c"><option value="">— Choisir —</option><option value="frottement">Électrisation par frottement</option><option value="conduction">Électrisation par conduction</option><option value="induction">Électrisation par induction</option></select></div>
+    <div class="sq"><div class="sql"><b>d)</b> En marchant sur un tapis synthétique, tu accumules des charges et tu reçois une décharge en touchant une poignée de porte en métal.</div>
+      <select class="asel" name="q8d"><option value="">— Choisir —</option><option value="frottement">Électrisation par frottement</option><option value="conduction">Électrisation par conduction</option><option value="induction">Électrisation par induction</option></select></div>
+  </div>
+  <div class="corr">✓ <strong>a) Frottement</strong> (contact + mouvement → transfert d'électrons) · <strong>b) Conduction</strong> (contact direct avec objet chargé → même charge) · <strong>c) Induction</strong> (sans contact → polarisation) · <strong>d) Frottement</strong> (marcher sur le tapis génère des charges par frottement)</div>
+</div>
+
+<!-- Q9 : Circuit interactif (tableau comportement) -->
+<div class="question" id="qcard-9">
+  <div class="q-row"><div class="q-num">9</div>
+    <div class="q-text">
+      Un circuit est composé d'une pile, d'un moteur (M), d'une ampoule (L) et de deux interrupteurs (I₁ et I₂). Voici le comportement du circuit selon la position des interrupteurs.
+      <div style="margin:12px 0;overflow-x:auto">
+        <table class="dt" style="margin:0">
+          <thead><tr><th>Interrupteur 1</th><th>Interrupteur 2</th><th>Moteur</th><th>Ampoule</th></tr></thead>
+          <tbody>
+            <tr><td>Ouvert</td><td>Ouvert</td><td>✗</td><td>✗</td></tr>
+            <tr><td>Ouvert</td><td>Fermé</td><td>✗</td><td>✗</td></tr>
+            <tr><td>Fermé</td><td>Ouvert</td><td>✓</td><td>✗</td></tr>
+            <tr><td>Fermé</td><td>Fermé</td><td>✓</td><td>✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+      D'après ce tableau, comment sont branchés le moteur et l'ampoule par rapport aux interrupteurs ?
+    </div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="sel-wrap">
+    <div class="sq"><div class="sql"><b>a)</b> Le moteur fonctionne dès que I₁ est fermé (peu importe I₂). Cela signifie que le moteur est branché :</div>
+      <select class="asel" name="q9a"><option value="">— Choisir —</option><option value="avantI1">Avant I₁ (sur la branche principale, sans interrupteur)</option><option value="apresI1">Après I₁ seulement (pas contrôlé par I₂)</option><option value="apresI2">Après I₂ seulement</option><option value="serie12">En série avec I₁ et I₂</option></select></div>
+    <div class="sq"><div class="sql"><b>b)</b> L'ampoule ne fonctionne que lorsque I₁ ET I₂ sont tous les deux fermés. L'ampoule est donc branchée :</div>
+      <select class="asel" name="q9b"><option value="">— Choisir —</option><option value="avantI1">Avant I₁</option><option value="apresI1">Après I₁ seulement</option><option value="serie12">En série avec I₁ et I₂ (contrôlée par les deux)</option><option value="parallele">En parallèle avec I₁</option></select></div>
+  </div>
+  <div class="corr">✓ <strong>a) Le moteur est branché après I₁ seulement</strong> — Il fonctionne dès que I₁ est fermé, indépendamment de I₂ : M est donc sur une branche qui ne passe que par I₁.<br>
+  <strong>b) L'ampoule est en série avec I₁ et I₂</strong> — Elle ne fonctionne que si I₁ ET I₂ sont fermés : L est sur une branche qui passe par I₁ puis par I₂.</div>
+</div>
+
+<!-- Q10 : Champ magnétique -->
+<div class="question" id="qcard-10">
+  <div class="q-row"><div class="q-num">10</div>
+    <div class="q-text">Réponds aux questions suivantes sur le <strong>champ magnétique</strong>.</div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="sel-wrap">
+    <div class="sq"><div class="sql"><b>a)</b> Les lignes de champ magnétique autour d'un aimant droit :</div>
+      <select class="asel" name="q10a"><option value="">— Choisir —</option>
+        <option value="NS">S'éloignent du pôle nord et se rapprochent du pôle sud.</option>
+        <option value="SN">S'éloignent du pôle sud et se rapprochent du pôle nord.</option>
+        <option value="circulaire">Forment des cercles autour de l'aimant.</option>
+        <option value="aucune">Il n'y a pas de lignes de champ autour d'un aimant.</option>
+      </select></div>
+    <div class="sq"><div class="sql"><b>b)</b> Deux aimants placés avec leurs pôles nord face à face :</div>
+      <select class="asel" name="q10b"><option value="">— Choisir —</option>
+        <option value="attirent">S'attirent, car les pôles contraires s'attirent.</option>
+        <option value="repoussent">Se repoussent, car les pôles identiques se repoussent.</option>
+        <option value="neutre">Ne réagissent pas entre eux.</option>
+        <option value="rotation">Tournent l'un autour de l'autre.</option>
+      </select></div>
+    <div class="sq"><div class="sql"><b>c)</b> Un courant électrique qui circule dans un fil rectiligne crée autour de lui :</div>
+      <select class="asel" name="q10c"><option value="">— Choisir —</option>
+        <option value="lineaire">Un champ magnétique en lignes droites parallèles au fil.</option>
+        <option value="circulaire">Un champ magnétique circulaire concentrique autour du fil.</option>
+        <option value="aucun">Aucun champ magnétique.</option>
+        <option value="electrique">Un champ électrique seulement.</option>
+      </select></div>
+    <div class="sq"><div class="sql"><b>d)</b> Un électroaimant est un dispositif qui :</div>
+      <select class="asel" name="q10d"><option value="">— Choisir —</option>
+        <option value="permanent">Produit un champ magnétique permanent sans électricité.</option>
+        <option value="courant">Produit un champ magnétique grâce à un courant électrique dans une bobine.</option>
+        <option value="chaleur">Convertit l'électricité en chaleur uniquement.</option>
+        <option value="lumiere">Produit de la lumière à partir du magnétisme.</option>
+      </select></div>
+  </div>
+  <div class="corr">✓ <strong>a) S'éloignent du pôle nord et se rapprochent du pôle sud</strong> · <strong>b) Se repoussent</strong> (N-N → répulsion) · <strong>c) Champ magnétique circulaire concentrique</strong> (règle de la main droite) · <strong>d) Produit un champ magnétique grâce à un courant dans une bobine</strong></div>
+</div>
+
+
+<!-- ════════════════════════════
+     SECTION 3 — FICHES INTERACTIVES
+════════════════════════════ -->
+<div class="section-heading">Question — Identification des composantes</div>
+
+<!-- Q11 : Fiche interactive composantes de circuit -->
+<div class="question" id="qcard-11">
+  <div class="q-row"><div class="q-num">11</div>
+    <div class="q-text">Pour chaque composante de circuit électrique, complète la <strong>fiche d'identification</strong> : rôle, position dans le circuit et unité de mesure. La fiche se met à jour en temps réel.</div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="fiche-grid" id="fiche-grid-11"></div>
+  <div class="corr" style="margin-top:12px">✓ Réponses :<br>
+  <strong>Ampèremètre :</strong> Mesure l'intensité · En série · Ampères (A)<br>
+  <strong>Voltmètre :</strong> Mesure la tension · En parallèle · Volts (V)<br>
+  <strong>Résistor :</strong> Résiste au courant · En série ou parallèle · Ohms (Ω)<br>
+  <strong>Pile :</strong> Fournit l'énergie · Source du circuit · Volts (V)</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SECTION 4 — DÉVELOPPEMENT / CALCULS
+════════════════════════════ -->
+<div class="section-heading">Questions à développement</div>
+
+<!-- Q12 : Calcul I = U/R -->
+<div class="question" id="qcard-12">
+  <div class="q-row"><div class="q-num">12</div>
+    <div class="q-text">
+      Un circuit est constitué d'une pile de <strong>9 V</strong>, d'un résistor de <strong>15 Ω</strong> et d'un ampèremètre.<br>
+      Quelle sera la valeur affichée par l'ampèremètre ? Laisse des traces de ta démarche.
+      <div style="margin:10px 0 4px;font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em">Formule : U = R × I &nbsp;→&nbsp; I = U ÷ R</div>
+    </div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="calc-wrap">
+    <div class="calc-step">
+      <div class="calc-step-title">Étape 1 — Données</div>
+      <div class="calc-row">U = <input type="number" class="calc-input" id="c12-u" placeholder="?" step="any" oninput="calc12()"> V &nbsp;·&nbsp; R = <input type="number" class="calc-input" id="c12-r" placeholder="?" step="any" oninput="calc12()"> Ω</div>
+    </div>
+    <div class="calc-step">
+      <div class="calc-step-title">Étape 2 — Calcul de I</div>
+      <div class="calc-row">I = U ÷ R = <input type="number" class="calc-input" id="c12-i" placeholder="?" step="any" oninput="calc12()"> <span class="calc-unit">A</span></div>
+    </div>
+    <div class="ac-fb" id="fb-q12"></div>
+  </div>
+  <div class="corr">✓ Données : U = 9 V · R = 15 Ω<br>I = 9 V ÷ 15 Ω = <strong>0,6 A</strong></div>
+</div>
+
+<!-- Q13 : Calcul électrisation + R = U/I -->
+<div class="question" id="qcard-13">
+  <div class="q-row"><div class="q-num">13</div>
+    <div class="q-text">
+      Des plinthes chauffantes sont alimentées par un courant de <strong>240 V</strong>. Chaque plinthe a une puissance de <strong>1 200 W</strong>.
+    </div>
+    <div class="q-pts">/ 8</div>
+  </div>
+  <div class="calc-wrap">
+    <!-- 13a : I = P/U -->
+    <div style="font-size:13.5px;font-weight:700;margin-bottom:8px"><b>a)</b> Calcule l'intensité du courant (I) nécessaire pour alimenter une plinthe.<br><span style="font-size:12px;font-weight:400;color:#555">Formule : P = U × I &nbsp;→&nbsp; I = P ÷ U</span></div>
+    <div class="calc-step">
+      <div class="calc-row">P = <input type="number" class="calc-input" id="c13a-p" placeholder="?" step="any" oninput="calc13()"> W &nbsp;·&nbsp; U = <input type="number" class="calc-input" id="c13a-u" placeholder="?" step="any" oninput="calc13()"> V</div>
+      <div class="calc-row">I = P ÷ U = <input type="number" class="calc-input" id="c13a-i" placeholder="?" step="any" oninput="calc13()"> <span class="calc-unit">A</span></div>
+    </div>
+    <div class="ac-fb" id="fb-q13a" style="margin-bottom:14px"></div>
+
+    <!-- 13b : R = U/I -->
+    <div style="font-size:13.5px;font-weight:700;margin-bottom:8px"><b>b)</b> Calcule la résistance (R) de chaque plinthe.<br><span style="font-size:12px;font-weight:400;color:#555">Formule : U = R × I &nbsp;→&nbsp; R = U ÷ I</span></div>
+    <div class="calc-step">
+      <div class="calc-row">R = U ÷ I = 240 ÷ <input type="number" class="calc-input" id="c13b-i" placeholder="I(a)" step="any" oninput="calc13()"> = <input type="number" class="calc-input" id="c13b-r" placeholder="?" step="any" oninput="calc13()"> <span class="calc-unit">Ω</span></div>
+    </div>
+    <div class="ac-fb" id="fb-q13b" style="margin-bottom:14px"></div>
+
+    <!-- 13c : É = P × t -->
+    <div style="font-size:13.5px;font-weight:700;margin-bottom:8px"><b>c)</b> Si une plinthe fonctionne en moyenne <strong>5 heures par jour</strong>, quelle énergie (en kWh) aura-t-elle consommée après <strong>une semaine</strong> ?<br><span style="font-size:12px;font-weight:400;color:#555">Formule : É = P × Δt (avec P en kW et Δt en heures)</span></div>
+    <div class="calc-step">
+      <div class="calc-row">Δt = 5 h/jour × 7 jours = <input type="number" class="calc-input" id="c13c-t" placeholder="?" step="any" oninput="calc13()"> <span class="calc-unit">h</span></div>
+      <div class="calc-row">P = 1200 W = <input type="number" class="calc-input" id="c13c-p" placeholder="?" step="any" oninput="calc13()"> <span class="calc-unit">kW</span></div>
+      <div class="calc-row">É = P × Δt = <input type="number" class="calc-input" id="c13c-e" placeholder="?" step="any" oninput="calc13()"> <span class="calc-unit">kWh</span></div>
+    </div>
+    <div class="ac-fb" id="fb-q13c"></div>
+  </div>
+  <div class="corr">✓ Réponses :<br>
+  <strong>a)</strong> I = 1200 W ÷ 240 V = <strong>5 A</strong><br>
+  <strong>b)</strong> R = 240 V ÷ 5 A = <strong>48 Ω</strong><br>
+  <strong>c)</strong> Δt = 5 × 7 = 35 h · P = 1,2 kW · É = 1,2 × 35 = <strong>42 kWh</strong></div>
+</div>
+
+<!-- Q14 : Risque d'électrocution -->
+<div class="question" id="qcard-14">
+  <div class="q-row"><div class="q-num">14</div>
+    <div class="q-text">
+      Une personne dont la résistance est estimée à <strong>2 000 Ω</strong> est exposée à un courant alternatif de 60 Hz et de <strong>120 V</strong>.<br>
+      Sachant que le seuil d'électrocution est de <strong>100 mA</strong>, risque-t-elle d'être électrocutée ? Laisse des traces de ta démarche.
+      <div style="background:#fff8f0;border:1px solid #f0c060;border-radius:4px;padding:10px 12px;margin-top:10px;font-size:13px">
+        ⚡ <strong>Seuils de danger :</strong> 10–20 mA = contractions musculaires · 20–100 mA = troubles graves · &gt;100 mA = arrêt cardiaque
+      </div>
+    </div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="calc-wrap">
+    <div class="calc-step">
+      <div class="calc-step-title">Étape 1 — Données</div>
+      <div class="calc-row">U = <input type="number" class="calc-input" id="c14-u" placeholder="?" step="any" oninput="calc14()"> V &nbsp;·&nbsp; R = <input type="number" class="calc-input" id="c14-r" placeholder="?" step="any" oninput="calc14()"> Ω</div>
+    </div>
+    <div class="calc-step">
+      <div class="calc-step-title">Étape 2 — Calcul de I = U ÷ R</div>
+      <div class="calc-row">I = <input type="number" class="calc-input" id="c14-i" placeholder="?" step="0.001" oninput="calc14()"> <span class="calc-unit">A</span> = <input type="number" class="calc-input" id="c14-ima" placeholder="?" step="any" oninput="calc14()"> <span class="calc-unit">mA</span></div>
+    </div>
+    <div class="calc-step">
+      <div class="calc-step-title">Étape 3 — Conclusion</div>
+      <select class="asel" name="q14-rep" style="width:auto;min-width:320px" onchange="calc14()">
+        <option value="">— Risque d'électrocution ? —</option>
+        <option value="oui">Oui, car I > 100 mA → risque d'arrêt cardiaque.</option>
+        <option value="non">Non, car I < 100 mA → pas de risque d'électrocution.</option>
+      </select>
+    </div>
+    <div class="ac-fb" id="fb-q14"></div>
+  </div>
+  <div class="corr">✓ Démarche :<br>
+  U = 120 V · R = 2 000 Ω<br>
+  I = 120 ÷ 2 000 = <strong>0,06 A = 60 mA</strong><br>
+  60 mA &lt; 100 mA → <strong>Non</strong>, cette personne ne risque pas l'électrocution, mais 60 mA peut quand même causer des troubles respiratoires et musculaires graves (zone 20–100 mA).</div>
+</div>
+
+
+<!-- BOUTON CORRECTION -->
+<div class="submit-zone">
+  <p style="color:#777;font-size:13px;margin-bottom:16px">Réponds à toutes les questions, puis clique pour la correction complète.</p>
+  <button class="btn-go" onclick="corriger()">Corriger mon examen →</button>
+  <div id="results">
+    <div class="rs" id="rs">—</div>
+    <div class="rl">réponses auto-corrigées</div>
+    <div class="rfb" id="rfb"></div>
+    <div class="rbd">
+      <div class="rbi"><span class="rv g" id="rco">0</span><span class="rl2">Correctes</span></div>
+      <div class="rbi"><span class="rv r" id="rko">0</span><span class="rl2">Incorrectes</span></div>
+      <div class="rbi"><span class="rv y" id="rsk">0</span><span class="rl2">Sans réponse</span></div>
+    </div>
+    <p class="rnote">Les corrections s'affichent en vert sous chaque question.<br>Q11 (fiche), Q12, Q13 et Q14 (calculs) sont inclus dans la correction automatique.</p>
+    <button class="btn-rst" onclick="recommencer()">↺ Recommencer</button>
+  </div>
+</div>
+
+</div><!-- /.page -->
+
+<script>
+/* ═══════════════════════════
+   CORRIGÉ Q1–Q10
+═══════════════════════════ */
+var REP={
+  q1:'C', q2:'D', q3:'D', q4:'C',
+  q5a1:'neg', q5a2:'pos',
+  q5b1:'neg', q5b2:'pos',
+  q6a:'A',  q6b:'V',  q6c:'A',  q6d:'V',
+  q7a:'parallele', q7b:'serie',
+  q8a:'frottement', q8b:'conduction',
+  q8c:'induction',  q8d:'frottement',
+  q9a:'apresI1', q9b:'serie12',
+  q10a:'NS', q10b:'repoussent',
+  q10c:'circulaire', q10d:'courant'
+};
+var AUTO=Object.keys(REP);
+var QCM=['q1','q2','q3','q4'];
+
+/* Progression */
+function majProg(){
+  var n=0;
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(){n++;});
+  document.querySelectorAll('select.asel').forEach(function(s){if(s.value)n++;});
+  var tot=36,p=Math.min(100,Math.round(n/tot*100));
+  document.getElementById('prog-fill').style.width=p+'%';
+  document.getElementById('prog-lbl').textContent=n+' réponse'+(n>1?'s':'');
+  document.getElementById('prog-pct').textContent=p+' %';
+}
+document.addEventListener('change',majProg);
+
+function val(n){
+  var r=document.querySelector('input[name="'+n+'"]:checked');
+  if(r)return r.value;
+  var s=document.querySelector('select[name="'+n+'"]');
+  if(s&&s.value)return s.value;
+  return null;
+}
+
+/* ═══ FICHE Q11 ═══ */
+var FICHES11=[
+  {id:'amp', nom:'Ampèremètre', role:'intensite', position:'serie', unite:'A'},
+  {id:'volt', nom:'Voltmètre',  role:'tension',   position:'parallele', unite:'V'},
+  {id:'res',  nom:'Résistor',   role:'resistance',position:'serieouparallele', unite:'ohm'},
+  {id:'pile', nom:'Pile',       role:'energie',   position:'source', unite:'V'}
+];
+var ETAT11={};
+FICHES11.forEach(function(f){ETAT11[f.id]={role:'',position:'',unite:'',correct:false,verifie:false};});
+
+function buildFiche11(){
+  var grid=document.getElementById('fiche-grid-11');
+  if(!grid)return;
+  grid.innerHTML='';
+  FICHES11.forEach(function(f){
+    var d=document.createElement('div');
+    d.className='fiche-card';d.id='fc11-'+f.id;
+    d.innerHTML=
+      '<div class="fc-head">'+
+        '<div class="fc-title">'+f.nom+'</div>'+
+        '<span class="fc-badge pend" id="fbadge11-'+f.id+'">En attente</span>'+
+      '</div>'+
+      '<div class="fc-body">'+
+        '<div class="fc-display" id="fdisp11-'+f.id+'">'+
+          '<div class="fc-row"><span class="fc-key">Rôle</span><span class="fc-val" id="fv11-role-'+f.id+'">—</span></div>'+
+          '<div class="fc-row"><span class="fc-key">Position</span><span class="fc-val" id="fv11-pos-'+f.id+'">—</span></div>'+
+          '<div class="fc-row"><span class="fc-key">Unité</span><span class="fc-val" id="fv11-uni-'+f.id+'">—</span></div>'+
+        '</div>'+
+        '<span class="fc-lbl">Rôle principal</span>'+
+        '<select class="asel15" onchange="majF11(\''+f.id+'\')">'+
+          '<option value="">— Choisir —</option>'+
+          '<option value="intensite">Mesure l\'intensité du courant</option>'+
+          '<option value="tension">Mesure la tension (différence de potentiel)</option>'+
+          '<option value="resistance">Résiste au passage du courant</option>'+
+          '<option value="energie">Fournit l\'énergie électrique</option>'+
+        '</select>'+
+        '<span class="fc-lbl">Position dans le circuit</span>'+
+        '<select class="asel15" onchange="majF11(\''+f.id+'\')">'+
+          '<option value="">— Choisir —</option>'+
+          '<option value="serie">En série</option>'+
+          '<option value="parallele">En parallèle</option>'+
+          '<option value="serieouparallele">En série ou en parallèle selon le circuit</option>'+
+          '<option value="source">Source du circuit (avant tout)</option>'+
+        '</select>'+
+        '<span class="fc-lbl">Unité de mesure</span>'+
+        '<select class="asel15" onchange="majF11(\''+f.id+'\')">'+
+          '<option value="">— Choisir —</option>'+
+          '<option value="A">Ampères (A)</option>'+
+          '<option value="V">Volts (V)</option>'+
+          '<option value="ohm">Ohms (Ω)</option>'+
+          '<option value="W">Watts (W)</option>'+
+        '</select>'+
+        '<button class="btn-ver" onclick="verF11(\''+f.id+'\')">Vérifier ✓</button>'+
+        '<button class="btn-eff" onclick="reinitF11(\''+f.id+'\')">↺ Effacer</button>'+
+        '<div class="ac-fb" id="fb11-'+f.id+'"></div>'+
+      '</div>';
+    grid.appendChild(d);
+  });
+}
+
+function majF11(id){
+  var sels=document.querySelectorAll('#fc11-'+id+' select.asel15');
+  var rv=sels[0]?sels[0].value:'';
+  var pv=sels[1]?sels[1].value:'';
+  var uv=sels[2]?sels[2].value:'';
+  var rtxt={intensite:"Mesure l'intensité",tension:"Mesure la tension",resistance:"Résiste au courant",energie:"Fournit l'énergie"};
+  var ptxt={serie:"En série",parallele:"En parallèle",serieouparallele:"Série ou parallèle",source:"Source du circuit"};
+  var utxt={A:"Ampères (A)",V:"Volts (V)",ohm:"Ohms (Ω)",W:"Watts (W)"};
+  document.getElementById('fv11-role-'+id).textContent=rtxt[rv]||'—';
+  document.getElementById('fv11-pos-'+id).textContent=ptxt[pv]||'—';
+  document.getElementById('fv11-uni-'+id).textContent=utxt[uv]||'—';
+  ETAT11[id].verifie=false;
+  document.getElementById('fc11-'+id).classList.remove('fc-ok','fc-ko');
+  document.getElementById('fbadge11-'+id).className='fc-badge pend';
+  document.getElementById('fbadge11-'+id).textContent='En attente';
+}
+
+function verF11(id){
+  var f=getF11(id);
+  var sels=document.querySelectorAll('#fc11-'+id+' select.asel15');
+  var rv=sels[0]?sels[0].value:'';
+  var pv=sels[1]?sels[1].value:'';
+  var uv=sels[2]?sels[2].value:'';
+  var okR=(rv===f.role),okP=(pv===f.position),okU=(uv===f.unite);
+  var ok=okR&&okP&&okU;
+  [[sels[0],okR],[sels[1],okP],[sels[2],okU]].forEach(function(x){
+    if(!x[0])return;
+    x[0].style.borderColor=x[1]?'#4caf50':'#ef5350';
+    x[0].style.background=x[1]?'#f1faf2':'#fff0f0';
+  });
+  var disp=document.getElementById('fdisp11-'+id);
+  if(disp){disp.style.borderColor=ok?'#4caf50':'#ef5350';disp.style.background=ok?'#f1faf2':'#fff8f8';}
+  ETAT11[id].verifie=true;ETAT11[id].correct=ok;
+  document.getElementById('fc11-'+id).classList.remove('fc-ok','fc-ko');
+  document.getElementById('fc11-'+id).classList.add(ok?'fc-ok':'fc-ko');
+  var badge=document.getElementById('fbadge11-'+id);
+  badge.className='fc-badge '+(ok?'ok':'ko');badge.textContent=ok?'✓ Correct':'✗ À revoir';
+  var errs=[];
+  if(!okR)errs.push('Rôle incorrect');
+  if(!okP)errs.push('Position incorrecte');
+  if(!okU)errs.push('Unité incorrecte');
+  var fb=document.getElementById('fb11-'+id);
+  fb.className='ac-fb '+(ok?'fbok':'fbko');
+  fb.innerHTML=ok?'✓ Parfait !':errs.join(' · ')+'<br>Consulte la correction ci-dessous.';
+}
+function toutVerF11(){FICHES11.forEach(function(f){if(!ETAT11[f.id].verifie)verF11(f.id);});}
+function reinitF11(id){
+  ETAT11[id]={role:'',position:'',unite:'',correct:false,verifie:false};
+  document.querySelectorAll('#fc11-'+id+' select.asel15').forEach(function(s){s.selectedIndex=0;s.style.borderColor='';s.style.background='';});
+  var disp=document.getElementById('fdisp11-'+id);
+  if(disp){disp.style.borderColor='';disp.style.background='';}
+  ['fv11-role-','fv11-pos-','fv11-uni-'].forEach(function(p){var el=document.getElementById(p+id);if(el)el.textContent='—';});
+  document.getElementById('fb11-'+id).className='ac-fb';
+  document.getElementById('fc11-'+id).classList.remove('fc-ok','fc-ko');
+  document.getElementById('fbadge11-'+id).className='fc-badge pend';
+  document.getElementById('fbadge11-'+id).textContent='En attente';
+}
+function getF11(id){for(var i=0;i<FICHES11.length;i++)if(FICHES11[i].id===id)return FICHES11[i];return null;}
+
+/* ═══ CALCULS ═══ */
+function setCI(id,hasVal,ok){
+  var el=document.getElementById(id);if(!el)return;
+  if(!hasVal){el.className='calc-input';return;}
+  el.classList.remove('cok','cko');el.classList.add(ok?'cok':'cko');
+}
+
+/* Q12 : I = U/R → 9/15 = 0.6 A */
+var ETAT12={ok:false};
+function calc12(force){
+  var u=parseFloat(document.getElementById('c12-u').value);
+  var r=parseFloat(document.getElementById('c12-r').value);
+  var i=parseFloat(document.getElementById('c12-i').value);
+  var okU=Math.abs(u-9)<0.01, okR=Math.abs(r-15)<0.01, okI=Math.abs(i-0.6)<0.01;
+  setCI('c12-u',!isNaN(u),okU);setCI('c12-r',!isNaN(r),okR);setCI('c12-i',!isNaN(i),okI);
+  var ok=okU&&okR&&okI;ETAT12.ok=ok;
+  if(force||ok){
+    var fb=document.getElementById('fb-q12');
+    fb.className='ac-fb '+(ok?'fbok':'fbko');
+    fb.innerHTML=ok?'✓ Parfait ! I = 9 V ÷ 15 Ω = <strong>0,6 A</strong>':
+      'Vérifie : U = 9 V · R = 15 Ω · I = 9 ÷ 15 = 0,6 A';
+  }
+}
+
+/* Q13 : a) I=P/U=1200/240=5A, b) R=U/I=240/5=48Ω, c) t=35h P=1.2kW É=42kWh */
+var ETAT13={a:false,b:false,c:false};
+function calc13(force){
+  var p=parseFloat(document.getElementById('c13a-p').value);
+  var u=parseFloat(document.getElementById('c13a-u').value);
+  var i=parseFloat(document.getElementById('c13a-i').value);
+  var okP=Math.abs(p-1200)<1, okU=Math.abs(u-240)<1, okI=Math.abs(i-5)<0.01;
+  setCI('c13a-p',!isNaN(p),okP);setCI('c13a-u',!isNaN(u),okU);setCI('c13a-i',!isNaN(i),okI);
+  ETAT13.a=okP&&okU&&okI;
+  if(force||ETAT13.a){
+    var fba=document.getElementById('fb-q13a');
+    fba.className='ac-fb '+(ETAT13.a?'fbok':'fbko');
+    fba.innerHTML=ETAT13.a?'✓ I = 1200 ÷ 240 = <strong>5 A</strong>':
+      'Rappel : I = P ÷ U = 1200 ÷ 240 = 5 A';
+  }
+  var bi=parseFloat(document.getElementById('c13b-i').value);
+  var br=parseFloat(document.getElementById('c13b-r').value);
+  var okBI=Math.abs(bi-5)<0.01, okBR=Math.abs(br-48)<0.1;
+  setCI('c13b-i',!isNaN(bi),okBI);setCI('c13b-r',!isNaN(br),okBR);
+  ETAT13.b=okBI&&okBR;
+  if(force||ETAT13.b){
+    var fbb=document.getElementById('fb-q13b');
+    fbb.className='ac-fb '+(ETAT13.b?'fbok':'fbko');
+    fbb.innerHTML=ETAT13.b?'✓ R = 240 ÷ 5 = <strong>48 Ω</strong>':
+      'Rappel : R = U ÷ I = 240 ÷ 5 = 48 Ω';
+  }
+  var ct=parseFloat(document.getElementById('c13c-t').value);
+  var cp=parseFloat(document.getElementById('c13c-p').value);
+  var ce=parseFloat(document.getElementById('c13c-e').value);
+  var okT=Math.abs(ct-35)<0.1, okCP=Math.abs(cp-1.2)<0.01, okE=Math.abs(ce-42)<0.1;
+  setCI('c13c-t',!isNaN(ct),okT);setCI('c13c-p',!isNaN(cp),okCP);setCI('c13c-e',!isNaN(ce),okE);
+  ETAT13.c=okT&&okCP&&okE;
+  if(force||ETAT13.c){
+    var fbc=document.getElementById('fb-q13c');
+    fbc.className='ac-fb '+(ETAT13.c?'fbok':'fbko');
+    fbc.innerHTML=ETAT13.c?'✓ É = 1,2 kW × 35 h = <strong>42 kWh</strong>':
+      'Rappel : Δt = 5×7 = 35 h · P = 1,2 kW · É = 1,2 × 35 = 42 kWh';
+  }
+}
+
+/* Q14 : I = 120/2000 = 0.06 A = 60 mA → non électrocution */
+var ETAT14={ok:false};
+function calc14(force){
+  var u=parseFloat(document.getElementById('c14-u').value);
+  var r=parseFloat(document.getElementById('c14-r').value);
+  var i=parseFloat(document.getElementById('c14-i').value);
+  var ima=parseFloat(document.getElementById('c14-ima').value);
+  var rep=document.querySelector('[name="q14-rep"]');
+  var rv=rep?rep.value:'';
+  var okU=Math.abs(u-120)<1, okR=Math.abs(r-2000)<10;
+  var okI=Math.abs(i-0.06)<0.001, okIma=Math.abs(ima-60)<1;
+  var okRep=(rv==='non');
+  var ok=okU&&okR&&okI&&okIma&&okRep;
+  setCI('c14-u',!isNaN(u),okU);setCI('c14-r',!isNaN(r),okR);
+  setCI('c14-i',!isNaN(i),okI);setCI('c14-ima',!isNaN(ima),okIma);
+  ETAT14.ok=ok;
+  if(force||ok){
+    var fb=document.getElementById('fb-q14');
+    fb.className='ac-fb '+(ok?'fbok':'fbko');
+    fb.innerHTML=ok?'✓ I = 120÷2000 = 0,06 A = <strong>60 mA</strong> &lt; 100 mA → <strong>Non</strong>, pas d\'électrocution (mais risque de blessures graves).':
+      'Rappel : I = U÷R = 120÷2000 = 0,06 A = 60 mA → 60 mA &lt; 100 mA → Non.';
+  }
+}
+
+/* ═══ CORRECTION GLOBALE ═══ */
+function corriger(){
+  var ok=0,ko=0,vd=0;
+  AUTO.forEach(function(q){
+    var v=val(q);if(!v){vd++;return;}
+    if(v===REP[q])ok++;else ko++;
+  });
+  QCM.forEach(function(q){
+    document.querySelectorAll('input[name="'+q+'"]').forEach(function(r){
+      var l=r.closest('.ch');
+      if(r.value===REP[q])l.classList.add('is-ok');
+      else if(r.checked)l.classList.add('is-bad');
+    });
+  });
+  var grp={
+    'qcard-1':['q1'],'qcard-2':['q2'],'qcard-3':['q3'],'qcard-4':['q4'],
+    'qcard-5':['q5a1','q5a2','q5b1','q5b2'],
+    'qcard-6':['q6a','q6b','q6c','q6d'],
+    'qcard-7':['q7a','q7b'],
+    'qcard-8':['q8a','q8b','q8c','q8d'],
+    'qcard-9':['q9a','q9b'],
+    'qcard-10':['q10a','q10b','q10c','q10d']
+  };
+  Object.keys(grp).forEach(function(id){
+    var c=document.getElementById(id);if(!c)return;
+    var res=grp[id].map(function(q){var v2=val(q);return v2?v2===REP[q]:null;});
+    if(res.indexOf(null)===-1&&res.every(Boolean))c.style.borderLeft='4px solid #4caf50';
+    else if(res.some(function(r){return r===false;}))c.style.borderLeft='4px solid #ef5350';
+  });
+  toutVerF11();
+  calc12(true);calc13(true);calc14(true);
+  document.body.classList.add('show-ans');
+  var sc11=FICHES11.reduce(function(s,f){return s+(ETAT11[f.id].correct?1:0);},0);
+  var sc12=ETAT12.ok?2:0;
+  var sc13=(ETAT13.a?1:0)+(ETAT13.b?1:0)+(ETAT13.c?1:0);
+  var sc14=ETAT14.ok?2:0;
+  var total=ok+sc11+sc12+sc13+sc14, max=AUTO.length+4+2+3+2;
+  document.getElementById('rs').textContent=total+' / '+max;
+  document.getElementById('rco').textContent=total;
+  document.getElementById('rko').textContent=Math.max(0,max-total-vd);
+  document.getElementById('rsk').textContent=vd;
+  var pct=total/max;
+  document.getElementById('rfb').textContent=
+    pct>=.9?'🎉 Excellent ! Tu maîtrises parfaitement ce chapitre.':
+    pct>=.75?'👍 Très bien ! Revois les questions manquées.':
+    pct>=.6?'📚 Continue à pratiquer !':
+    '💪 Revois tes notes et recommence !';
+  var r=document.getElementById('results');r.style.display='block';
+  setTimeout(function(){r.scrollIntoView({behavior:'smooth',block:'center'});},100);
+}
+
+function recommencer(){
+  document.querySelectorAll('input[type=radio]').forEach(function(r){r.checked=false;});
+  document.querySelectorAll('select.asel,select.asel15').forEach(function(s){s.selectedIndex=0;s.style.borderColor='';s.style.background='';});
+  document.querySelectorAll('.ch').forEach(function(l){l.classList.remove('is-ok','is-bad');});
+  document.querySelectorAll('.question').forEach(function(c){c.style.borderLeft='';});
+  document.body.classList.remove('show-ans');
+  document.getElementById('results').style.display='none';
+  FICHES11.forEach(function(f){reinitF11(f.id);});
+  document.querySelectorAll('.calc-input').forEach(function(i){i.value='';i.className='calc-input';});
+  document.querySelectorAll('.ac-fb').forEach(function(f){if(!f.classList.contains('fiche-card'))f.className='ac-fb';});
+  ETAT12.ok=false;ETAT13.a=false;ETAT13.b=false;ETAT13.c=false;ETAT14.ok=false;
+  majProg();window.scrollTo({top:0,behavior:'smooth'});
+}
+
+window.addEventListener('load',function(){buildFiche11();});
+</script>
+</body>
+</html>
