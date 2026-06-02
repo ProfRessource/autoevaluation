@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Évaluation – Chapitre 6 – La fabrication des objets techniques</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0ece4;font-family:'Source Sans 3',sans-serif;font-size:15px;color:#1a1a1a;padding:28px 16px 60px}
+.page{background:#fff;max-width:820px;margin:0 auto;padding:44px 52px 56px;box-shadow:0 2px 20px rgba(0,0,0,.12)}
+@media(max-width:620px){.page{padding:22px 16px 36px}}
+
+.exam-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:2.5px solid #1a1a1a;margin-bottom:22px}
+.header-left h1{font-family:'Source Serif 4',serif;font-weight:700;font-size:19px;line-height:1.25}
+.header-left p{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#666;margin-top:3px}
+.eval-pill{background:#1a1a1a;color:#fff;font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:3px 12px;display:inline-block}
+.total-box{font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;border:2px solid #1a1a1a;padding:3px 16px;margin-top:7px;display:inline-block}
+
+.student-info{display:flex;gap:28px;margin-bottom:20px;padding-bottom:13px;border-bottom:1px solid #ccc;flex-wrap:wrap}
+.info-field{flex:1;min-width:110px}
+.info-field label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#888;display:block;margin-bottom:3px}
+.info-field input{width:100%;border:none;border-bottom:1.5px solid #bbb;padding:4px 2px;font-size:14px;font-family:'Source Sans 3',sans-serif;background:transparent;outline:none}
+.info-field input:focus{border-bottom-color:#1a1a1a}
+
+.prog-wrap{margin-bottom:24px}
+.prog-top{display:flex;justify-content:space-between;font-size:11px;color:#888;font-weight:600;margin-bottom:5px}
+.prog-bar{height:4px;background:#e8e4dc;border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:#1a1a1a;border-radius:2px;width:0%;transition:width .4s}
+
+.section-heading{font-family:'Source Serif 4',serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;border-bottom:2px solid #1a1a1a;padding-bottom:5px;margin:32px 0 18px}
+
+.question{margin-bottom:26px}
+.q-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.q-num{flex-shrink:0;width:25px;height:25px;border-radius:50%;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;font-family:'Source Serif 4',serif}
+.q-text{flex:1;font-size:14.5px;line-height:1.55}
+.q-pts{flex-shrink:0;font-size:11.5px;font-weight:700;border:1.5px solid #bbb;padding:1px 8px;color:#555}
+
+/* Choix multiples */
+.choices{padding-left:35px;display:flex;flex-direction:column;gap:6px;margin-top:5px}
+.ch{display:flex;align-items:flex-start;gap:8px;padding:6px 9px;border-radius:3px;border:1px solid transparent;cursor:pointer;font-size:13.5px;line-height:1.5;user-select:none;transition:background .1s,border-color .1s}
+.ch:hover{background:#f5f2ec;border-color:#ccc}
+.ch input[type=radio]{appearance:none;width:15px;height:15px;border-radius:50%;border:1.5px solid #999;flex-shrink:0;margin-top:2px;cursor:pointer;transition:all .1s}
+.ch input:checked{background:#1a1a1a;border-color:#1a1a1a;box-shadow:inset 0 0 0 3px #fff}
+.cl{font-weight:700;font-size:12px;color:#666;flex-shrink:0;min-width:14px;margin-top:1px}
+.show-ans .ch.is-ok{background:#e8f5e9;border-color:#4caf50}
+.show-ans .ch.is-bad{background:#ffebee;border-color:#ef5350}
+
+/* Grille de propriétés pour Q1 */
+.prop-grid{padding-left:35px;margin-top:8px}
+.situation-block{margin-bottom:18px;padding:12px 14px;background:#f8f6f2;border:1px solid #e0ddd8;border-radius:4px}
+.sit-title{font-size:13.5px;font-weight:700;margin-bottom:8px;line-height:1.4}
+.sit-badge{display:inline-block;background:#1a1a1a;color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.props-2col{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.prop-opt{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:3px;border:1px solid #ddd;cursor:pointer;font-size:13px;user-select:none;transition:all .1s;background:#fff}
+.prop-opt:hover{border-color:#aaa}
+.prop-opt input[type=radio]{appearance:none;width:14px;height:14px;border-radius:50%;border:1.5px solid #999;flex-shrink:0;cursor:pointer;transition:all .1s}
+.prop-opt input:checked{background:#1a1a1a;border-color:#1a1a1a;box-shadow:inset 0 0 0 3px #fff}
+.show-ans .prop-opt.is-ok{background:#e8f5e9;border-color:#4caf50}
+.show-ans .prop-opt.is-bad{background:#ffebee;border-color:#ef5350}
+
+/* Selects */
+.sel-wrap{padding-left:35px;margin-top:8px}
+.sq{margin-bottom:10px}
+.sql{font-size:13.5px;margin-bottom:4px;line-height:1.5}
+.sql b{font-weight:700}
+select.asel{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;border:1.5px solid #bbb;border-radius:3px;padding:7px 30px 7px 10px;font-family:'Source Sans 3',sans-serif;font-size:13px;color:#1a1a1a;cursor:pointer;transition:border-color .1s;min-width:200px}
+select.asel:focus{outline:none;border-color:#1a1a1a}
+
+/* Tableau association */
+.asso-table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0 0 35px}
+.asso-table th{background:#f5f2ec;border:1px solid #ccc;padding:8px 12px;font-weight:700;font-size:11.5px;text-align:left}
+.asso-table td{border:1px solid #ddd;padding:8px 12px;vertical-align:middle}
+.asso-table td:first-child{font-size:13px;line-height:1.4;width:55%}
+select.asel-sm{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23777' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 8px center;border:1.5px solid #bbb;border-radius:3px;padding:5px 26px 5px 8px;font-family:'Source Sans 3',sans-serif;font-size:12.5px;color:#1a1a1a;cursor:pointer;width:100%;transition:border-color .1s}
+select.asel-sm:focus{outline:none;border-color:#1a1a1a}
+
+/* Tableau protection matériaux */
+.prot-table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0 0 35px}
+.prot-table th{background:#f5f2ec;border:1px solid #ccc;padding:7px 10px;font-weight:700;font-size:11.5px;text-align:center}
+.prot-table th:first-child{text-align:left}
+.prot-table td{border:1px solid #ddd;padding:7px 10px;vertical-align:middle}
+.prot-table td:not(:first-child){text-align:center}
+.prot-radio{appearance:none;width:16px;height:16px;border-radius:50%;border:1.5px solid #999;cursor:pointer;transition:all .1s}
+.prot-radio:checked{background:#1a1a1a;border-color:#1a1a1a;box-shadow:inset 0 0 0 3px #fff}
+
+/* Cases à cocher (checkboxes) */
+.check-wrap{padding-left:35px;margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:500px){.check-wrap{grid-template-columns:1fr}}
+.ck-label{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:3px;border:1px solid #ddd;cursor:pointer;font-size:13px;user-select:none;transition:all .1s;background:#f8f6f2}
+.ck-label:hover{border-color:#aaa}
+.ck-label input[type=checkbox]{appearance:none;width:15px;height:15px;border-radius:3px;border:1.5px solid #999;flex-shrink:0;cursor:pointer;transition:all .1s;display:flex;align-items:center;justify-content:center}
+.ck-label input:checked{background:#1a1a1a;border-color:#1a1a1a}
+.show-ans .ck-label.ck-ok{background:#e8f5e9;border-color:#4caf50}
+.show-ans .ck-label.ck-bad{background:#ffebee;border-color:#ef5350}
+
+/* Contraintes mécaniques SVG */
+.contrainte-grid{padding-left:35px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:10px}
+@media(max-width:540px){.contrainte-grid{grid-template-columns:1fr 1fr}}
+.contrainte-item{text-align:center;background:#f8f6f2;border:1px solid #e0ddd8;border-radius:4px;padding:12px 10px}
+.contrainte-label{font-size:11.5px;font-weight:700;color:#555;margin-top:8px;text-transform:uppercase;letter-spacing:.04em}
+
+/* Textarea */
+.ta-wrap{padding-left:35px;margin-top:8px}
+textarea.ata{width:100%;border:1px solid #ccc;border-radius:3px;padding:10px 12px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:#1a1a1a;resize:vertical;min-height:80px;line-height:1.6}
+textarea.ata:focus{outline:none;border-color:#1a1a1a}
+textarea.ata::placeholder{color:#bbb}
+
+/* Correction */
+.corr{display:none;margin-top:9px;margin-left:35px;padding:9px 12px;background:#e8f5e9;border-left:3px solid #4caf50;border-radius:0 3px 3px 0;font-size:12.5px;color:#2e7d32;line-height:1.6}
+.show-ans .corr{display:block}
+
+.ac-fb{margin-top:8px;padding:7px 9px;border-radius:3px;font-size:12px;font-weight:600;line-height:1.5;display:none}
+.ac-fb.fbok{background:#e8f5e9;border-left:3px solid #4caf50;color:#2e7d32;display:block}
+.ac-fb.fbko{background:#ffebee;border-left:3px solid #ef5350;color:#c62828;display:block}
+
+/* Submit */
+.submit-zone{margin-top:38px;padding:26px 30px;background:#f8f6f2;border:1.5px solid #ddd;border-radius:4px;text-align:center}
+.btn-go{background:#1a1a1a;color:#fff;border:none;padding:13px 42px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:15px;letter-spacing:.03em;cursor:pointer;border-radius:3px;transition:background .15s}
+.btn-go:hover{background:#333}
+#results{display:none;margin-top:22px;padding:22px;background:#fff;border:1.5px solid #ccc;border-radius:4px}
+.rs{font-family:'Source Serif 4',serif;font-size:46px;font-weight:700;line-height:1;margin-bottom:3px}
+.rl{font-size:13px;color:#777;margin-bottom:14px}
+.rbd{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+.rbi{border:1.5px solid #ddd;border-radius:3px;padding:8px 16px;text-align:center;min-width:86px}
+.rv{font-size:20px;font-weight:700;display:block}
+.rv.g{color:#2e7d32}.rv.r{color:#c62828}.rv.y{color:#e65100}
+.rl2{font-size:10px;color:#888;font-weight:600;text-transform:uppercase}
+.rfb{font-size:15px;font-weight:700;margin:14px 0 3px;color:#1a1a1a}
+.rnote{font-size:12px;color:#888;margin-top:10px;line-height:1.6}
+.btn-rst{margin-top:14px;background:#fff;border:1.5px solid #1a1a1a;padding:9px 26px;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:13px;cursor:pointer;border-radius:3px;transition:background .1s}
+.btn-rst:hover{background:#f0ece4}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- EN-TÊTE -->
+<div class="exam-header">
+  <div class="header-left">
+    <h1>Chapitre 6<br>La fabrication des objets techniques</h1>
+    <p>Sciences et technologie · Évaluation ST</p>
+  </div>
+  <div style="text-align:right">
+    <div class="eval-pill">Évaluation ST</div>
+    <div class="total-box">/ 40</div>
+  </div>
+</div>
+
+<div class="student-info">
+  <div class="info-field"><label>Nom</label><input type="text" placeholder="Ton nom…"></div>
+  <div class="info-field"><label>Date</label><input type="text" placeholder="Date…"></div>
+  <div class="info-field"><label>Groupe</label><input type="text" placeholder="Groupe…"></div>
+</div>
+
+<div class="prog-wrap">
+  <div class="prog-top"><span id="prog-lbl">0 réponse</span><span id="prog-pct">0 %</span></div>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+</div>
+
+
+<!-- ════════════════════════════
+     SECTION 1 — CHOIX MULTIPLES
+════════════════════════════ -->
+<div class="section-heading">Questions à choix multiples</div>
+
+<!-- Q1 : Propriétés mécaniques selon situations -->
+<div class="question" id="qcard-1">
+  <div class="q-row"><div class="q-num">1</div>
+    <div class="q-text">Sélectionne la <strong>propriété mécanique recherchée</strong> dans chacune des situations suivantes.</div>
+    <div class="q-pts">/ 8</div>
+  </div>
+  <div class="prop-grid">
+
+    <!-- A : pare-chocs → résilience -->
+    <div class="situation-block">
+      <div class="sit-title"><span class="sit-badge">A</span>Un casque de vélo doit absorber l'énergie d'un impact pour protéger la tête du cycliste.</div>
+      <div class="props-2col">
+        <label class="prop-opt"><input type="radio" name="q1a" value="elasticite"> L'élasticité</label>
+        <label class="prop-opt"><input type="radio" name="q1a" value="resilience"> La résilience</label>
+        <label class="prop-opt"><input type="radio" name="q1a" value="malleabilite"> La malléabilité</label>
+        <label class="prop-opt"><input type="radio" name="q1a" value="durete"> La dureté</label>
+      </div>
+    </div>
+
+    <!-- B : tuyau souple → ductilité -->
+    <div class="situation-block">
+      <div class="sit-title"><span class="sit-badge">B</span>Pour fabriquer des tuyaux flexibles, il faut utiliser un matériau capable d'être étiré en fils ou en tubes sans se rompre.</div>
+      <div class="props-2col">
+        <label class="prop-opt"><input type="radio" name="q1b" value="ductilite"> La ductilité</label>
+        <label class="prop-opt"><input type="radio" name="q1b" value="rigidite"> La rigidité</label>
+        <label class="prop-opt"><input type="radio" name="q1b" value="malleabilite"> La malléabilité</label>
+        <label class="prop-opt"><input type="radio" name="q1b" value="fragilite"> La fragilité</label>
+      </div>
+    </div>
+
+    <!-- C : ressort → élasticité -->
+    <div class="situation-block">
+      <div class="sit-title"><span class="sit-badge">C</span>Le matériau utilisé pour fabriquer les ressorts d'un matelas doit être capable de reprendre sa forme initiale après avoir été compressé.</div>
+      <div class="props-2col">
+        <label class="prop-opt"><input type="radio" name="q1c" value="elasticite"> L'élasticité</label>
+        <label class="prop-opt"><input type="radio" name="q1c" value="resilience"> La résilience</label>
+        <label class="prop-opt"><input type="radio" name="q1c" value="malleabilite"> La malléabilité</label>
+        <label class="prop-opt"><input type="radio" name="q1c" value="rigidite"> La rigidité</label>
+      </div>
+    </div>
+
+    <!-- D : couteau → dureté -->
+    <div class="situation-block">
+      <div class="sit-title"><span class="sit-badge">D</span>Pour fabriquer la lame d'un couteau de chef, on doit choisir un matériau capable de résister aux rayures et de conserver son tranchant.</div>
+      <div class="props-2col">
+        <label class="prop-opt"><input type="radio" name="q1d" value="durete"> La dureté</label>
+        <label class="prop-opt"><input type="radio" name="q1d" value="ductilite"> La ductilité</label>
+        <label class="prop-opt"><input type="radio" name="q1d" value="rigidite"> La rigidité</label>
+        <label class="prop-opt"><input type="radio" name="q1d" value="resilience"> La résilience</label>
+      </div>
+    </div>
+
+  </div>
+  <div class="corr">✓ Réponses :<br>
+  <strong>A) La résilience</strong> — Le casque doit absorber l'énergie d'un choc sans se rompre (résistance aux chocs).<br>
+  <strong>B) La ductilité</strong> — Capacité à être étiré en fils ou en tubes sans se rompre.<br>
+  <strong>C) L'élasticité</strong> — Capacité à reprendre sa forme initiale après une déformation.<br>
+  <strong>D) La dureté</strong> — Résistance aux rayures et à l'usure de surface.</div>
+</div>
+
+<!-- Q2 : Catégorie rigide et fragile -->
+<div class="question" id="qcard-2">
+  <div class="q-row"><div class="q-num">2</div>
+    <div class="q-text">Quelle catégorie de matériaux est à la fois <strong>rigide et fragile</strong> ?</div>
+    <div class="q-pts">/ 2</div>
+  </div>
+  <div class="choices">
+    <label class="ch"><input type="radio" name="q2" value="A"><span class="cl">A</span>Les céramiques.</label>
+    <label class="ch"><input type="radio" name="q2" value="B"><span class="cl">B</span>Les métaux.</label>
+    <label class="ch"><input type="radio" name="q2" value="C"><span class="cl">C</span>Les thermodurcissables.</label>
+    <label class="ch"><input type="radio" name="q2" value="D"><span class="cl">D</span>Les thermoplastiques.</label>
+  </div>
+  <div class="corr">✓ Bonne réponse : <strong>A</strong> — Les céramiques sont des matériaux rigides (résistants à la déformation) mais fragiles (se brisent sans se déformer lors d'un choc). Ex : la porcelaine, la brique, le verre.</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SECTION 2 — RÉPONSES COURTES
+════════════════════════════ -->
+<div class="section-heading">Questions à réponses courtes</div>
+
+<!-- Q3 : Contraintes mécaniques -->
+<div class="question" id="qcard-3">
+  <div class="q-row"><div class="q-num">3</div>
+    <div class="q-text">Nomme la <strong>contrainte mécanique</strong> illustrée dans chacune des situations suivantes.</div>
+    <div class="q-pts">/ 5</div>
+  </div>
+  <!-- SVG schémas des contraintes -->
+  <div class="contrainte-grid">
+    <!-- Traction -->
+    <div class="contrainte-item">
+      <svg viewBox="0 0 80 80" width="70" height="70" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="20" width="20" height="40" rx="3" fill="#c0d4f0" stroke="#2c5aa0" stroke-width="1.5"/>
+        <polygon points="40,5 35,15 45,15" fill="#1a1a1a"/>
+        <polygon points="40,75 35,65 45,65" fill="#1a1a1a"/>
+        <line x1="40" y1="5" x2="40" y2="20" stroke="#1a1a1a" stroke-width="2"/>
+        <line x1="40" y1="60" x2="40" y2="75" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="40" y="44" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#2c5aa0" font-weight="bold">étirement</text>
+      </svg>
+      <div class="contrainte-label">a) Un câble supporte le poids d'un lustre.</div>
+      <select class="asel" name="q3a" style="margin-top:6px;min-width:0;width:100%">
+        <option value="">— Contrainte —</option>
+        <option value="traction">Traction</option>
+        <option value="compression">Compression</option>
+        <option value="cisaillement">Cisaillement</option>
+        <option value="torsion">Torsion</option>
+        <option value="flexion">Flexion</option>
+      </select>
+    </div>
+    <!-- Compression -->
+    <div class="contrainte-item">
+      <svg viewBox="0 0 80 80" width="70" height="70" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="25" width="20" height="30" rx="3" fill="#c0d4f0" stroke="#2c5aa0" stroke-width="1.5"/>
+        <polygon points="40,12 35,22 45,22" fill="#1a1a1a" transform="rotate(180,40,17)"/>
+        <polygon points="40,68 35,58 45,58" fill="#1a1a1a" transform="rotate(180,40,63)"/>
+        <line x1="40" y1="5" x2="40" y2="25" stroke="#1a1a1a" stroke-width="2"/>
+        <line x1="40" y1="55" x2="40" y2="75" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="40" y="44" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#2c5aa0" font-weight="bold">écrasement</text>
+      </svg>
+      <div class="contrainte-label">b) Un pilier de béton soutient le plancher d'un bâtiment.</div>
+      <select class="asel" name="q3b" style="margin-top:6px;min-width:0;width:100%">
+        <option value="">— Contrainte —</option>
+        <option value="traction">Traction</option>
+        <option value="compression">Compression</option>
+        <option value="cisaillement">Cisaillement</option>
+        <option value="torsion">Torsion</option>
+        <option value="flexion">Flexion</option>
+      </select>
+    </div>
+    <!-- Cisaillement -->
+    <div class="contrainte-item">
+      <svg viewBox="0 0 80 80" width="70" height="70" xmlns="http://www.w3.org/2000/svg">
+        <rect x="25" y="30" width="30" height="20" rx="2" fill="#c0d4f0" stroke="#2c5aa0" stroke-width="1.5"/>
+        <polygon points="10,40 20,35 20,45" fill="#1a1a1a"/>
+        <polygon points="70,40 60,35 60,45" fill="#1a1a1a"/>
+        <line x1="10" y1="40" x2="25" y2="40" stroke="#1a1a1a" stroke-width="2"/>
+        <line x1="55" y1="40" x2="70" y2="40" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="40" y="44" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#2c5aa0" font-weight="bold">glissement</text>
+      </svg>
+      <div class="contrainte-label">c) Des ciseaux découpent une feuille de papier.</div>
+      <select class="asel" name="q3c" style="margin-top:6px;min-width:0;width:100%">
+        <option value="">— Contrainte —</option>
+        <option value="traction">Traction</option>
+        <option value="compression">Compression</option>
+        <option value="cisaillement">Cisaillement</option>
+        <option value="torsion">Torsion</option>
+        <option value="flexion">Flexion</option>
+      </select>
+    </div>
+    <!-- Torsion -->
+    <div class="contrainte-item">
+      <svg viewBox="0 0 80 80" width="70" height="70" xmlns="http://www.w3.org/2000/svg">
+        <rect x="34" y="15" width="12" height="50" rx="3" fill="#c0d4f0" stroke="#2c5aa0" stroke-width="1.5"/>
+        <path d="M20,20 Q40,10 60,20" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+        <path d="M60,60 Q40,70 20,60" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+        <defs>
+          <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1a1a1a"/></marker>
+          <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1a1a1a"/></marker>
+        </defs>
+        <text x="40" y="45" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#2c5aa0" font-weight="bold">rotation</text>
+      </svg>
+      <div class="contrainte-label">d) On visse un boulon à l'aide d'une clé.</div>
+      <select class="asel" name="q3d" style="margin-top:6px;min-width:0;width:100%">
+        <option value="">— Contrainte —</option>
+        <option value="traction">Traction</option>
+        <option value="compression">Compression</option>
+        <option value="cisaillement">Cisaillement</option>
+        <option value="torsion">Torsion</option>
+        <option value="flexion">Flexion</option>
+      </select>
+    </div>
+    <!-- Flexion -->
+    <div class="contrainte-item" style="grid-column:span 1">
+      <svg viewBox="0 0 80 80" width="70" height="70" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,35 Q40,55 70,35" stroke="#2c5aa0" stroke-width="3" fill="none"/>
+        <line x1="10" y1="35" x2="10" y2="60" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="70" y1="35" x2="70" y2="60" stroke="#1a1a1a" stroke-width="1.5"/>
+        <polygon points="40,42 35,32 45,32" fill="#1a1a1a"/>
+        <line x1="40" y1="20" x2="40" y2="32" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="40" y="24" text-anchor="middle" font-size="8" font-family="sans-serif" fill="#555">charge</text>
+      </svg>
+      <div class="contrainte-label">e) Une étagère de bibliothèque se courbe sous le poids des livres.</div>
+      <select class="asel" name="q3e" style="margin-top:6px;min-width:0;width:100%">
+        <option value="">— Contrainte —</option>
+        <option value="traction">Traction</option>
+        <option value="compression">Compression</option>
+        <option value="cisaillement">Cisaillement</option>
+        <option value="torsion">Torsion</option>
+        <option value="flexion">Flexion</option>
+      </select>
+    </div>
+  </div>
+  <div class="corr" style="margin-top:10px">✓ Réponses :<br>
+  <strong>a) Traction</strong> — Forces opposées qui tirent dans deux directions opposées (étirement).<br>
+  <strong>b) Compression</strong> — Forces opposées qui poussent l'une vers l'autre (écrasement).<br>
+  <strong>c) Cisaillement</strong> — Forces parallèles qui glissent l'une contre l'autre (coupure).<br>
+  <strong>d) Torsion</strong> — Force de rotation appliquée autour d'un axe (vrillage).<br>
+  <strong>e) Flexion</strong> — Force appliquée perpendiculairement qui courbe le matériau.</div>
+</div>
+
+<!-- Q4 : Matériaux composites — baignoire acrylique -->
+<div class="question" id="qcard-4">
+  <div class="q-row"><div class="q-num">4</div>
+    <div class="q-text">
+      Les coques de bateau modernes sont souvent fabriquées en <strong>résine époxy renforcée de fibres de carbone</strong>. Ces deux matériaux sont associés pour former un matériau très résistant et léger.<br><br>
+      Les coques en résine époxy renforcée offrent plusieurs avantages : elles sont très résistantes, très légères et ne rouillent pas. Toutefois, elles sont plus coûteuses et peuvent se fissurer sous un choc violent.
+    </div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="sel-wrap">
+    <div class="sq"><div class="sql"><b>a)</b> À quelle catégorie de matériaux la résine époxy renforcée appartient-elle ?</div>
+      <select class="asel" name="q4a"><option value="">— Choisir —</option>
+        <option value="composite">Matériaux composites</option>
+        <option value="metal">Métaux</option>
+        <option value="ceramique">Céramiques</option>
+        <option value="thermoplastique">Thermoplastiques</option>
+      </select></div>
+    <div class="sq"><div class="sql"><b>b)</b> Quel matériau constitue la <strong>matrice</strong> (liant) ?</div>
+      <select class="asel" name="q4b"><option value="">— Choisir —</option>
+        <option value="resine">La résine époxy</option>
+        <option value="carbone">Les fibres de carbone</option>
+        <option value="verre">Les fibres de verre</option>
+        <option value="acier">L'acier</option>
+      </select></div>
+    <div class="sq"><div class="sql"><b>c)</b> Quel matériau forme les <strong>renforts</strong> ?</div>
+      <select class="asel" name="q4c"><option value="">— Choisir —</option>
+        <option value="carbone">Les fibres de carbone</option>
+        <option value="resine">La résine époxy</option>
+        <option value="acier">L'acier</option>
+        <option value="verre">Les fibres de verre</option>
+      </select></div>
+    <div class="sq"><div class="sql"><b>d)</b> La résine époxy est un plastique. De quelle sous-catégorie fait-elle partie ?</div>
+      <select class="asel" name="q4d"><option value="">— Choisir —</option>
+        <option value="thermodurcissable">Thermodurcissable</option>
+        <option value="thermoplastique">Thermoplastique</option>
+        <option value="elastomere">Élastomère</option>
+        <option value="composite">Composite</option>
+      </select></div>
+  </div>
+  <div class="corr">✓ <strong>a) Matériaux composites</strong> (deux matériaux associés) · <strong>b) La résine époxy</strong> (c'est le liant, la matrice) · <strong>c) Les fibres de carbone</strong> (ce sont les renforts qui donnent la résistance) · <strong>d) Thermodurcissable</strong> (la résine époxy durcit définitivement une fois chauffée, elle ne peut pas être remoulée)</div>
+</div>
+
+<!-- Q5 : Association avantages/inconvénients → propriétés -->
+<div class="question" id="qcard-5">
+  <div class="q-row"><div class="q-num">5</div>
+    <div class="q-text">Associe chacun des avantages et inconvénients de la coque en résine époxy renforcée à la <strong>propriété de matériau</strong> correspondante.</div>
+    <div class="q-pts">/ 5</div>
+  </div>
+
+  <!-- Avantages -->
+  <div style="margin:10px 0 6px 35px;font-size:13px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em">Avantages</div>
+  <table class="asso-table" style="width:calc(100% - 35px)">
+    <thead><tr><th>Avantage</th><th>Propriété</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Les coques en résine époxy sont beaucoup plus légères que les coques en acier.</td>
+        <td>
+          <select class="asel-sm" name="q5a1"><option value="">—</option>
+            <option value="legerete">La légèreté</option>
+            <option value="resistance-corrosion">La résistance à la corrosion</option>
+            <option value="resistance-chaleur">La résistance à la chaleur</option>
+            <option value="rigidite">La rigidité</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Contrairement à l'acier, elles ne rouillent pas en contact avec l'eau de mer.</td>
+        <td>
+          <select class="asel-sm" name="q5a2"><option value="">—</option>
+            <option value="legerete">La légèreté</option>
+            <option value="resistance-corrosion">La résistance à la corrosion</option>
+            <option value="resistance-chaleur">La résistance à la chaleur</option>
+            <option value="durete">La dureté</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Elles conservent leur forme rigide même sous la pression de l'eau.</td>
+        <td>
+          <select class="asel-sm" name="q5a3"><option value="">—</option>
+            <option value="rigidite">La rigidité</option>
+            <option value="legerete">La légèreté</option>
+            <option value="elasticite">L'élasticité</option>
+            <option value="resistance-corrosion">La résistance à la corrosion</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Inconvénients -->
+  <div style="margin:14px 0 6px 35px;font-size:13px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em">Inconvénients</div>
+  <table class="asso-table" style="width:calc(100% - 35px)">
+    <thead><tr><th>Inconvénient</th><th>Propriété</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Elles peuvent se fissurer sous un choc violent (ex. : collision avec un rocher).</td>
+        <td>
+          <select class="asel-sm" name="q5b1"><option value="">—</option>
+            <option value="faible-resilience">La faible résilience</option>
+            <option value="faible-durete">La faible dureté</option>
+            <option value="faible-rigidite">La faible rigidité</option>
+            <option value="fragilite">La fragilité</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Elles sont sensibles aux rayures causées par le sable et les rochers.</td>
+        <td>
+          <select class="asel-sm" name="q5b2"><option value="">—</option>
+            <option value="faible-durete">La faible dureté</option>
+            <option value="faible-resilience">La faible résilience</option>
+            <option value="faible-rigidite">La faible rigidité</option>
+            <option value="fragilite">La fragilité</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="corr" style="margin-top:10px">✓ Avantages : <strong>a1) Légèreté</strong> · <strong>a2) Résistance à la corrosion</strong> · <strong>a3) Rigidité</strong><br>
+  Inconvénients : <strong>b1) Faible résilience</strong> (ne résiste pas aux chocs sans se fissurer) · <strong>b2) Faible dureté</strong> (sensible aux rayures)</div>
+</div>
+
+<!-- Q6 : Propriétés d'un objet + checkboxes -->
+<div class="question" id="qcard-6">
+  <div class="q-row"><div class="q-num">6</div>
+    <div class="q-text">
+      On fabrique un <strong>cadre de bicyclette</strong> en alliage d'aluminium. Coche toutes les propriétés qui sont <strong>recherchées</strong> pour ce type d'objet.
+    </div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <div class="check-wrap">
+    <label class="ck-label"><input type="checkbox" name="q6" value="legerete"> La légèreté</label>
+    <label class="ck-label"><input type="checkbox" name="q6" value="rigidite"> La rigidité</label>
+    <label class="ck-label"><input type="checkbox" name="q6" value="fragilite"> La fragilité</label>
+    <label class="ck-label"><input type="checkbox" name="q6" value="resistance-corrosion"> La résistance à la corrosion</label>
+    <label class="ck-label"><input type="checkbox" name="q6" value="resilience"> La résilience</label>
+    <label class="ck-label"><input type="checkbox" name="q6" value="conductibilite-thermique"> La conductibilité thermique</label>
+  </div>
+  <div class="ac-fb" id="fb-q6"></div>
+  <div class="corr">✓ Propriétés recherchées : <strong>La légèreté</strong> (vélo plus facile à pédaler) · <strong>La rigidité</strong> (le cadre doit garder sa forme) · <strong>La résistance à la corrosion</strong> (résister à la pluie et la sueur) · <strong>La résilience</strong> (résister aux chocs sans se rompre).<br>
+  Propriétés <em>non</em> recherchées : fragilité (dangereux) · conductibilité thermique (non pertinent).</div>
+</div>
+
+<!-- Q7 : Protection des matériaux -->
+<div class="question" id="qcard-7">
+  <div class="q-row"><div class="q-num">7</div>
+    <div class="q-text">
+      Une cuve de brouette peut être fabriquée en <strong>métal</strong> ou en <strong>plastique</strong>. Indique si chaque moyen de protection s'applique au <strong>métal</strong>, au <strong>plastique</strong> ou aux <strong>deux</strong>.
+    </div>
+    <div class="q-pts">/ 4</div>
+  </div>
+  <table class="prot-table" style="margin-left:35px;width:calc(100% - 35px)">
+    <thead>
+      <tr>
+        <th>Moyen de protection</th>
+        <th>Métal seulement</th>
+        <th>Plastique seulement</th>
+        <th>Les deux</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Traiter la surface avec un métal qui retarde l'oxydation (ex. : galvanisation au zinc).</td>
+        <td><input type="radio" class="prot-radio" name="p7a" value="metal"></td>
+        <td><input type="radio" class="prot-radio" name="p7a" value="plastique"></td>
+        <td><input type="radio" class="prot-radio" name="p7a" value="deux"></td>
+      </tr>
+      <tr>
+        <td>Ajouter des pigments qui absorbent les rayons ultraviolets pour éviter la dégradation.</td>
+        <td><input type="radio" class="prot-radio" name="p7b" value="metal"></td>
+        <td><input type="radio" class="prot-radio" name="p7b" value="plastique"></td>
+        <td><input type="radio" class="prot-radio" name="p7b" value="deux"></td>
+      </tr>
+      <tr>
+        <td>Mélanger le matériau avec d'autres substances afin qu'il s'oxyde plus difficilement.</td>
+        <td><input type="radio" class="prot-radio" name="p7c" value="metal"></td>
+        <td><input type="radio" class="prot-radio" name="p7c" value="plastique"></td>
+        <td><input type="radio" class="prot-radio" name="p7c" value="deux"></td>
+      </tr>
+      <tr>
+        <td>Appliquer une couche de peinture sur la surface.</td>
+        <td><input type="radio" class="prot-radio" name="p7d" value="metal"></td>
+        <td><input type="radio" class="prot-radio" name="p7d" value="plastique"></td>
+        <td><input type="radio" class="prot-radio" name="p7d" value="deux"></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="corr">✓ Réponses :<br>
+  <strong>Galvanisation au zinc → Métal seulement</strong> (traitement contre la rouille pour les métaux).<br>
+  <strong>Pigments UV → Plastique seulement</strong> (les UV dégradent surtout les plastiques).<br>
+  <strong>Mélange avec d'autres substances → Les deux</strong> (alliages pour les métaux, additifs pour les plastiques).<br>
+  <strong>Peinture → Métal seulement</strong> (sert surtout à protéger le métal de la rouille ; le plastique résiste naturellement à la corrosion).</div>
+</div>
+
+
+<!-- ════════════════════════════
+     SECTION 3 — DÉVELOPPEMENT
+════════════════════════════ -->
+<div class="section-heading">Question à développement</div>
+
+<!-- Q8 : Développement propriétés + explication -->
+<div class="question" id="qcard-8">
+  <div class="q-row"><div class="q-num">8</div>
+    <div class="q-text">
+      Une <strong>casserole de cuisine</strong> est fabriquée avec un corps en acier inoxydable et un manche en plastique phénolique (thermodurcissable). Le fond de la casserole est recouvert d'un revêtement antiadhésif (PTFE, un polymère).<br><br>
+      Explique le choix de chaque matériau en lien avec ses propriétés.
+    </div>
+    <div class="q-pts">/ 8</div>
+  </div>
+  <div class="sel-wrap">
+    <div class="sq">
+      <div class="sql"><b>a)</b> Pourquoi le corps est-il en <strong>acier inoxydable</strong> ?<br><span style="font-size:12px;color:#666">Sélectionne les deux propriétés les plus importantes.</span></div>
+      <select class="asel" name="q8a1" style="margin-bottom:6px"><option value="">— Propriété 1 —</option>
+        <option value="resistance-chaleur">Résistance à la chaleur</option>
+        <option value="resistance-corrosion">Résistance à la corrosion (inoxydable)</option>
+        <option value="elasticite">Élasticité</option>
+        <option value="fragilite">Fragilité</option>
+      </select>
+      <select class="asel" name="q8a2"><option value="">— Propriété 2 —</option>
+        <option value="rigidite">Rigidité (garde sa forme)</option>
+        <option value="malleabilite">Malléabilité</option>
+        <option value="faible-durete">Faible dureté</option>
+        <option value="fragilite">Fragilité</option>
+      </select>
+    </div>
+    <div class="sq">
+      <div class="sql"><b>b)</b> Pourquoi le manche est-il en <strong>plastique phénolique</strong> (thermodurcissable) ?</div>
+      <select class="asel" name="q8b"><option value="">— Propriété principale —</option>
+        <option value="faible-conductibilite">Faible conductibilité thermique (isolant thermique)</option>
+        <option value="haute-conductibilite">Haute conductibilité thermique</option>
+        <option value="ductilite">Ductilité</option>
+        <option value="malleabilite">Malléabilité</option>
+      </select>
+    </div>
+    <div class="sq">
+      <div class="sql"><b>c)</b> Pourquoi le manche en plastique phénolique ne fond-il pas lorsque la casserole est sur la cuisinière ?</div>
+      <select class="asel" name="q8c"><option value="">— Raison —</option>
+        <option value="thermodurcissable">C'est un thermodurcissable : il durcit définitivement et ne ramollit pas à la chaleur.</option>
+        <option value="thermoplastique">C'est un thermoplastique : il fond et se remodèle facilement.</option>
+        <option value="composite">C'est un composite : les fibres l'empêchent de fondre.</option>
+        <option value="ceramique">C'est une céramique : indestructible par la chaleur.</option>
+      </select>
+    </div>
+    <div class="sq">
+      <div class="sql"><b>d)</b> Quelle propriété du revêtement antiadhésif (PTFE) est la plus importante pour la cuisson ?</div>
+      <select class="asel" name="q8d"><option value="">— Propriété —</option>
+        <option value="faible-adhesion">Faible adhérence de surface (les aliments ne collent pas)</option>
+        <option value="haute-durete">Haute dureté</option>
+        <option value="haute-conductibilite">Haute conductibilité thermique</option>
+        <option value="resilience">Résilience élevée</option>
+      </select>
+    </div>
+  </div>
+  <div class="corr">✓ Réponses :<br>
+  <strong>a)</strong> Résistance à la chaleur + Résistance à la corrosion (acier <em>in</em>oxydable = résiste à l'eau et aux aliments acides) + Rigidité.<br>
+  <strong>b)</strong> Faible conductibilité thermique — le plastique phénolique est un isolant thermique : le manche ne chauffe pas, on peut tenir la casserole sans se brûler.<br>
+  <strong>c)</strong> C'est un thermodurcissable — il a durci définitivement lors de sa fabrication (réaction chimique irréversible) et ne ramollit pas sous l'effet de la chaleur, contrairement aux thermoplastiques.<br>
+  <strong>d)</strong> Faible adhérence de surface — le PTFE est extrêmement glissant : les aliments n'adhèrent pas à la surface.</div>
+</div>
+
+
+<!-- BOUTON CORRECTION -->
+<div class="submit-zone">
+  <p style="color:#777;font-size:13px;margin-bottom:16px">Réponds à toutes les questions, puis clique pour la correction complète.</p>
+  <button class="btn-go" onclick="corriger()">Corriger mon examen →</button>
+  <div id="results">
+    <div class="rs" id="rs">—</div>
+    <div class="rl">réponses auto-corrigées</div>
+    <div class="rfb" id="rfb"></div>
+    <div class="rbd">
+      <div class="rbi"><span class="rv g" id="rco">0</span><span class="rl2">Correctes</span></div>
+      <div class="rbi"><span class="rv r" id="rko">0</span><span class="rl2">Incorrectes</span></div>
+      <div class="rbi"><span class="rv y" id="rsk">0</span><span class="rl2">Sans réponse</span></div>
+    </div>
+    <p class="rnote">Les corrections s'affichent en vert sous chaque question.<br>Toutes les questions sont corrigées automatiquement.</p>
+    <button class="btn-rst" onclick="recommencer()">↺ Recommencer</button>
+  </div>
+</div>
+
+</div><!-- /.page -->
+
+<script>
+/* ══ CORRIGÉ COMPLET ══ */
+var REP = {
+  /* Q1 propriétés */
+  q1a:'resilience', q1b:'ductilite', q1c:'elasticite', q1d:'durete',
+  /* Q2 catégorie */
+  q2:'A',
+  /* Q3 contraintes */
+  q3a:'traction', q3b:'compression', q3c:'cisaillement', q3d:'torsion', q3e:'flexion',
+  /* Q4 composite */
+  q4a:'composite', q4b:'resine', q4c:'carbone', q4d:'thermodurcissable',
+  /* Q5 association */
+  q5a1:'legerete', q5a2:'resistance-corrosion', q5a3:'rigidite',
+  q5b1:'faible-resilience', q5b2:'faible-durete',
+  /* Q6 checkboxes — bonnes réponses */
+  /* handled separately */
+  /* Q7 protection */
+  p7a:'metal', p7b:'plastique', p7c:'deux', p7d:'metal',
+  /* Q8 développement */
+  q8a1:'resistance-chaleur', q8a2:'rigidite',
+  q8b:'faible-conductibilite', q8c:'thermodurcissable', q8d:'faible-adhesion'
+};
+
+var Q6_GOOD = ['legerete','rigidite','resistance-corrosion','resilience'];
+var AUTO = Object.keys(REP);
+
+/* Progression */
+function majProg(){
+  var n=0;
+  document.querySelectorAll('input[type=radio]:checked,input[type=checkbox]:checked').forEach(function(){n++;});
+  document.querySelectorAll('select.asel,select.asel-sm').forEach(function(s){if(s.value)n++;});
+  var tot=40,p=Math.min(100,Math.round(n/tot*100));
+  document.getElementById('prog-fill').style.width=p+'%';
+  document.getElementById('prog-lbl').textContent=n+' réponse'+(n>1?'s':'');
+  document.getElementById('prog-pct').textContent=p+' %';
+}
+document.addEventListener('change',majProg);
+
+function val(n){
+  var r=document.querySelector('input[name="'+n+'"]:checked');
+  if(r)return r.value;
+  var s=document.querySelector('select[name="'+n+'"]');
+  if(s&&s.value)return s.value;
+  return null;
+}
+
+/* ══ Q6 CHECKBOXES ══ */
+function scoreQ6(){
+  var checked=Array.from(document.querySelectorAll('input[name="q6"]:checked')).map(function(c){return c.value;});
+  var ok=Q6_GOOD.every(function(g){return checked.indexOf(g)>-1;});
+  var noExtra=checked.every(function(c){return Q6_GOOD.indexOf(c)>-1;});
+  return ok&&noExtra;
+}
+function colorQ6(force){
+  var checked=Array.from(document.querySelectorAll('input[name="q6"]:checked')).map(function(c){return c.value;});
+  document.querySelectorAll('.ck-label').forEach(function(lbl){
+    var inp=lbl.querySelector('input');if(!inp)return;
+    lbl.classList.remove('ck-ok','ck-bad');
+    var isGood=Q6_GOOD.indexOf(inp.value)>-1;
+    lbl.classList.add(isGood?'ck-ok':'ck-bad');
+  });
+  var ok=scoreQ6();
+  var fb=document.getElementById('fb-q6');
+  fb.className='ac-fb '+(ok?'fbok':'fbko');
+  fb.innerHTML=ok?'✓ Parfait ! Tu as coché les 4 bonnes propriétés.':
+    'Bonnes réponses : <strong>légèreté, rigidité, résistance à la corrosion, résilience</strong>.';
+}
+
+/* ══ CORRECTION GLOBALE ══ */
+function corriger(){
+  var ok=0,ko=0,vd=0;
+  AUTO.forEach(function(q){
+    var v=val(q);
+    if(!v){vd++;return;}
+    if(v===REP[q])ok++;else ko++;
+  });
+
+  /* Colorer Q1 prop-opt */
+  ['q1a','q1b','q1c','q1d'].forEach(function(q){
+    document.querySelectorAll('input[name="'+q+'"]').forEach(function(r){
+      var lbl=r.closest('.prop-opt');
+      if(r.value===REP[q])lbl.classList.add('is-ok');
+      else if(r.checked)lbl.classList.add('is-bad');
+    });
+  });
+
+  /* Colorer Q2 choices */
+  document.querySelectorAll('input[name="q2"]').forEach(function(r){
+    var l=r.closest('.ch');
+    if(r.value===REP['q2'])l.classList.add('is-ok');
+    else if(r.checked)l.classList.add('is-bad');
+  });
+
+  /* Colorer selects Q3,Q4,Q5,Q7,Q8 */
+  ['q3a','q3b','q3c','q3d','q3e',
+   'q4a','q4b','q4c','q4d',
+   'q5a1','q5a2','q5a3','q5b1','q5b2',
+   'p7a','p7b','p7c','p7d',
+   'q8a1','q8a2','q8b','q8c','q8d'].forEach(function(q){
+    var s=document.querySelector('select[name="'+q+'"],input[name="'+q+'"]:checked');
+    var container=document.querySelector('[name="'+q+'"]');
+    if(!container)return;
+    var v=val(q)||container.value;
+    if(container.tagName==='SELECT'){
+      container.style.borderColor=(v&&v===REP[q])?'#4caf50':'#ef5350';
+      container.style.background=(v&&v===REP[q])?'#f1faf2':'#fff0f0';
+    }
+  });
+  /* Colorer radio p7 */
+  ['p7a','p7b','p7c','p7d'].forEach(function(q){
+    document.querySelectorAll('input[name="'+q+'"]').forEach(function(r){
+      if(r.value===REP[q])r.parentNode&&(r.style.outline='2px solid #4caf50');
+      else if(r.checked)r.parentNode&&(r.style.outline='2px solid #ef5350');
+    });
+  });
+
+  /* Q6 checkboxes */
+  colorQ6(true);
+  var q6ok=scoreQ6();
+  if(q6ok)ok++;else ko++;
+
+  /* Colorer cartes */
+  var grp={
+    'qcard-1':['q1a','q1b','q1c','q1d'],
+    'qcard-2':['q2'],
+    'qcard-3':['q3a','q3b','q3c','q3d','q3e'],
+    'qcard-4':['q4a','q4b','q4c','q4d'],
+    'qcard-5':['q5a1','q5a2','q5a3','q5b1','q5b2'],
+    'qcard-7':['p7a','p7b','p7c','p7d'],
+    'qcard-8':['q8a1','q8a2','q8b','q8c','q8d']
+  };
+  Object.keys(grp).forEach(function(id){
+    var card=document.getElementById(id);if(!card)return;
+    var res=grp[id].map(function(q){var v2=val(q);return v2?v2===REP[q]:null;});
+    if(res.indexOf(null)===-1&&res.every(Boolean))card.style.borderLeft='4px solid #4caf50';
+    else if(res.some(function(r){return r===false;}))card.style.borderLeft='4px solid #ef5350';
+  });
+
+  document.body.classList.add('show-ans');
+  var max=AUTO.length+1; // +1 for Q6
+  var total=ok;
+  document.getElementById('rs').textContent=total+' / '+max;
+  document.getElementById('rco').textContent=total;
+  document.getElementById('rko').textContent=Math.max(0,max-total-vd);
+  document.getElementById('rsk').textContent=vd;
+  var pct=total/max;
+  document.getElementById('rfb').textContent=
+    pct>=.9?'🎉 Excellent ! Tu maîtrises parfaitement ce chapitre.':
+    pct>=.75?'👍 Très bien ! Revois les questions manquées.':
+    pct>=.6?'📚 Continue à pratiquer !':
+    '💪 Revois tes notes et recommence !';
+  var r=document.getElementById('results');r.style.display='block';
+  setTimeout(function(){r.scrollIntoView({behavior:'smooth',block:'center'});},100);
+}
+
+function recommencer(){
+  document.querySelectorAll('input[type=radio]').forEach(function(r){r.checked=false;r.style.outline='';});
+  document.querySelectorAll('input[type=checkbox]').forEach(function(c){c.checked=false;});
+  document.querySelectorAll('select.asel,select.asel-sm').forEach(function(s){s.selectedIndex=0;s.style.borderColor='';s.style.background='';});
+  document.querySelectorAll('.ch').forEach(function(l){l.classList.remove('is-ok','is-bad');});
+  document.querySelectorAll('.prop-opt').forEach(function(l){l.classList.remove('is-ok','is-bad');});
+  document.querySelectorAll('.ck-label').forEach(function(l){l.classList.remove('ck-ok','ck-bad');});
+  document.querySelectorAll('.question').forEach(function(c){c.style.borderLeft='';});
+  document.querySelectorAll('.ac-fb').forEach(function(f){f.className='ac-fb';});
+  document.body.classList.remove('show-ans');
+  document.getElementById('results').style.display='none';
+  majProg();window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
